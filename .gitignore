@@ -1,0 +1,19 @@
+# Installed packages (recreated with "npm run install-all")
+node_modules/
+
+# React production build (recreated with "npm run build")
+client/dist/
+
+# Secrets — NEVER commit your real .env file
+.env
+server/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

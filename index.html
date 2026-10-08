@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+  CyberQuest – Cybersecurity Awareness Game
+  ------------------------------------------------------------
+  Single-page web application (no build step, no server needed).
+  Open this file in any modern browser to play.
+
+  File overview
+    css/styles.css        All visual styling (light + dark theme, responsive layout)
+    js/utils.js           Small helpers: SVG icons, HTML escaping, shuffling
+    js/data/lessons.js    Course content: 10 lessons, activities and quiz questions
+    js/storage.js         ProgressStore class – saves progress in localStorage
+    js/effects.js         Toast messages, sound effects and confetti
+    js/activities.js      Interactive practice activities (one class per type)
+    js/quiz.js            QuizEngine class – quiz logic and scoring
+    js/views.js           Page views (Home, Lessons, Lesson, Quiz, Progress, Help)
+    js/app.js             App class – hash router, theme, header and start-up
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberQuest · Cybersecurity Awareness Game</title>
+  <meta name="description" content="Learn to recognise phishing, scams and online threats through 10 interactive lessons and fun quizzes.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Web fonts (the site falls back to system fonts when offline) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Lets keyboard users jump past the navigation -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Site header & main navigation ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#/" class="brand" aria-label="CyberQuest home">
+        <span class="brand-mark" id="brand-mark"></span>
+        <span class="brand-name">Cyber<span>Quest</span></span>
+      </a>
+
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <a href="#/" data-nav="home">Home</a>
+        <a href="#/lessons" data-nav="lessons">Lessons</a>
+        <a href="#/progress" data-nav="progress">My Progress</a>
+        <a href="#/help" data-nav="help">How to Play</a>
+      </nav>
+
+      <div class="header-tools">
+        <a href="#/progress" class="xp-pill" id="xp-pill" title="Your experience points">0 XP</a>
+        <button type="button" class="icon-btn" id="sound-toggle" aria-pressed="false" aria-label="Turn sound on"></button>
+        <button type="button" class="icon-btn" id="theme-toggle" aria-label="Switch to dark theme"></button>
+        <button type="button" class="icon-btn nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Page content is rendered here by the router (js/app.js) ===== -->
+  <main id="main" tabindex="-1">
+    <noscript>
+      <div class="container" style="padding:48px 16px">
+        <h1>JavaScript is required</h1>
+        <p>CyberQuest is an interactive game. Please enable JavaScript to play.</p>
+      </div>
+    </noscript>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>CyberQuest</strong> — a cybersecurity awareness game.
+        <p class="footer-note">Educational project. All companies, people, phone numbers and messages shown in the lessons are fictional examples.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#/lessons">Lessons</a>
+        <a href="#/lesson/10">Final Challenge</a>
+        <a href="#/progress">My Progress</a>
+        <a href="#/help">How to Play</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Live region for short pop-up messages ("toasts") -->
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Canvas used for the confetti celebration -->
+  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+
+  <!-- Scripts are loaded in dependency order (plain scripts so the site also works from file://) -->
+  <script src="js/utils.js"></script>
+  <script src="js/data/lessons.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/activities.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

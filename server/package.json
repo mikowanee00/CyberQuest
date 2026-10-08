@@ -1,0 +1,27 @@
+{
+  "name": "cyberquest-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Express + MongoDB REST API for the CyberQuest cybersecurity awareness game (MVC architecture)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "dev:memory": "node scripts/memoryServer.js",
+    "test": "node --test tests/api.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.0"
+  },
+  "devDependencies": {
+    "mongodb-memory-server-core": "^10.1.2",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
