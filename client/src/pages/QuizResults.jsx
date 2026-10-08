@@ -93,7 +93,7 @@ export default function QuizResults({ lesson, result, outcome, onRetry }) {
             <span className="cert-seal"><Icon name="logo" /></span>
             <p className="cert-kicker">Certificate of Completion</p>
             <p className="cert-small">This certifies that</p>
-            <h2 className="cert-name">{player?.nickname || 'Cyber Agent'}</h2>
+            <h2 className="cert-name">{player?.nickname || 'CyberQuest player'}</h2>
             <p className="cert-small">has completed the <strong>CyberQuest Cybersecurity Awareness Game</strong> and earned the rank of</p>
             <p className="cert-rank">{title.title.replace('!', '')}</p>
             <p className="cert-meta">

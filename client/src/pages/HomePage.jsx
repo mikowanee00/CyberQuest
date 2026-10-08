@@ -41,7 +41,7 @@ function StartForms({ onRegistered }) {
     e.preventDefault();
     const name = nickname.trim();
     if (name.length < 2) return setError('Please choose a nickname with at least 2 characters.');
-    if (!consent) return setError('Please tick the box to agree before you start.');
+    if (!consent) return setError('Please tick the box so we can save your progress.');
     setBusy(true);
     setError('');
     try {
@@ -77,22 +77,22 @@ function StartForms({ onRegistered }) {
     <div className="start-card">
       <div className="auth-tabs" role="tablist">
         <button type="button" role="tab" aria-selected={mode === 'register'} className={`auth-tab ${mode === 'register' ? 'is-active' : ''}`} onClick={() => switchTo('register')}>New player</button>
-        <button type="button" role="tab" aria-selected={mode === 'login'} className={`auth-tab ${mode === 'login' ? 'is-active' : ''}`} onClick={() => switchTo('login')}>I already have a code</button>
+        <button type="button" role="tab" aria-selected={mode === 'login'} className={`auth-tab ${mode === 'login' ? 'is-active' : ''}`} onClick={() => switchTo('login')}>I've played before</button>
       </div>
 
       {mode === 'register' ? (
         <form className="name-form" onSubmit={onRegister} noValidate>
-          <label htmlFor="player-name">What should we call you, agent?</label>
+          <label htmlFor="player-name">Pick a nickname to get started</label>
           <div className="name-row">
-            <input id="player-name" type="text" maxLength={24} placeholder="A nickname works best" autoComplete="off"
+            <input id="player-name" type="text" maxLength={24} placeholder="e.g. Sam" autoComplete="off"
               value={nickname} onChange={e => setNickname(e.target.value)} aria-invalid={!!error} />
             <button className="btn btn-primary btn-lg" type="submit" disabled={busy}>
-              {busy ? 'Creating…' : <>Start the mission <Icon name="arrowRight" /></>}
+              {busy ? 'Starting…' : <>Start learning <Icon name="arrowRight" /></>}
             </button>
           </div>
           <label className="checkbox-row">
             <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />
-            <span>I agree that my <strong>nickname and quiz results</strong> are saved for a class research project. I can delete them at any time.</span>
+            <span>Save my progress (my <strong>nickname and quiz scores</strong>) so I can pick up where I left off. I can delete it any time.</span>
           </label>
           <p className="form-note"><Icon name="lock" /> Tip from Lesson 9: don't use your real name — a nickname is safer.</p>
         </form>
@@ -162,7 +162,7 @@ export default function HomePage() {
     start = (
       <>
         {location.state?.needPlayer && (
-          <p className="banner banner-info"><Icon name="user" /> Create a player profile (or log in) first, so your progress can be saved.</p>
+          <p className="banner banner-info"><Icon name="user" /> Pick a nickname (or sign back in) first, so we can save your progress.</p>
         )}
         <StartForms onRegistered={setNewCode} />
       </>
@@ -177,8 +177,8 @@ export default function HomePage() {
             <p className="eyebrow"><Icon name="shield" /> Cybersecurity Awareness Game</p>
             <h1>Think before<br />you <span className="hl">click.</span></h1>
             <p className="lead">
-              Learn to spot phishing emails, scams and online tricks through 10 bite-sized lessons, hands-on simulations
-              and fun quizzes. Earn XP, collect badges and become a <strong>Cyber Detective</strong>.
+              Learn to spot scams, fake emails and online tricks in 10 short lessons, with real stories, hands-on
+              practice and quick quizzes. Earn points and badges as you go.
             </p>
             {start}
             <ul className="hero-facts">
@@ -198,37 +198,27 @@ export default function HomePage() {
             <article className="feature">
               <span className="feature-icon" style={{ '--c': '#6366f1' }}><Icon name="book" /></span>
               <h3>1. Learn</h3>
-              <p>Short, clear lessons explain each threat with real-world examples.</p>
+              <p>Short lessons with real stories of how scams actually happen.</p>
             </article>
             <article className="feature">
               <span className="feature-icon" style={{ '--c': '#14b8a6' }}><Icon name="target" /></span>
               <h3>2. Practice</h3>
-              <p>Hunt for red flags in fake emails, chat with a scammer, test passwords and more.</p>
+              <p>Spot red flags in fake emails, chat with a scammer and test your passwords.</p>
             </article>
             <article className="feature">
               <span className="feature-icon" style={{ '--c': '#f59e0b' }}><Icon name="award" /></span>
               <h3>3. Quiz &amp; earn</h3>
-              <p>Answer fun quizzes with instant feedback, earn XP and stars, and unlock badges.</p>
+              <p>Quick quizzes with instant feedback. Earn points, stars and badges.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="section section-alt">
-        <div className="container">
-          <h2 className="section-heading">Why it matters</h2>
-          <div className="feature-grid">
-            <article className="feature feature-plain"><h3>🎣 Attackers target people</h3><p>Most attacks don't break software — they trick a person into clicking, sharing or paying.</p></article>
-            <article className="feature feature-plain"><h3>🖱️ One click can be enough</h3><p>A single fake login page or infected attachment can expose your email, money and identity.</p></article>
-            <article className="feature feature-plain"><h3>🛡️ Good habits are easy</h3><p>A few simple habits — pause, check, verify — stop the vast majority of scams.</p></article>
-          </div>
-        </div>
-      </section>
 
       <section className="section">
         <div className="container">
           <div className="section-head-row">
-            <h2 className="section-heading">Your mission: 10 lessons</h2>
+            <h2 className="section-heading">The 10 lessons</h2>
             <Link to="/lessons" className="text-link">View all <Icon name="arrowRight" /></Link>
           </div>
           <ol className="mini-lessons">

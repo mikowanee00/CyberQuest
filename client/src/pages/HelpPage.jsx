@@ -31,11 +31,12 @@ export default function HelpPage() {
         <div>
           <h2 className="section-heading">Getting started</h2>
           <ol className="steps-list">
-            <li><strong>Create a player profile</strong> on the <Link to="/">Home</Link> page: choose a nickname, tick the consent box and press <em>Start the mission</em>.</li>
+            <li><strong>Pick a nickname</strong> on the <Link to="/">Home</Link> page, tick the box to save your progress and press <em>Start learning</em>.</li>
             <li><strong>Write down your player code.</strong> With your nickname it lets you continue on any device.</li>
             <li><strong>Open a lesson</strong> from the <Link to="/lessons">Lessons</Link> page. Any order works, but the numbered order is recommended.</li>
             <li><strong>Learn:</strong> read the short sections and the key takeaways.</li>
-            <li><strong>Practice:</strong> complete the interactive activity (a green “Done” label appears).</li>
+            <li><strong>Real examples:</strong> read true-to-life stories of how scams happen.</li>
+            <li><strong>Practice:</strong> answer the Quick check questions, then try the hands-on activity (a green “Done” label appears).</li>
             <li><strong>Quiz:</strong> press <em>Start the quiz</em>, pick answers and read the instant feedback.</li>
             <li><strong>Results:</strong> see your score, stars, XP and badge. Review your answers, retry, or go to the next lesson.</li>
             <li><strong>Final challenge:</strong> Lesson 10 is a timed, randomized quiz. Score 70%+ for a printable certificate.</li>
@@ -89,4 +90,3 @@ export default function HelpPage() {
     </>
   );
 }
-

@@ -6,9 +6,9 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container footer-inner">
         <div>
-          <strong>CyberQuest</strong> — a cybersecurity awareness game.
+          <strong>CyberQuest</strong> — learn to spot online scams before they spot you.
           <p className="footer-note">
-            Educational project. All companies, people, phone numbers and messages shown in the lessons are fictional examples.
+            The companies, people, phone numbers and messages in the lessons are made-up examples.
           </p>
         </div>
         <nav className="footer-nav" aria-label="Footer">
@@ -16,7 +16,6 @@ export default function Footer() {
           <Link to="/lesson/10">Final Challenge</Link>
           <Link to="/progress">My Progress</Link>
           <Link to="/help">How to Play</Link>
-          <Link to="/admin">Admin dashboard</Link>
         </nav>
       </div>
     </footer>

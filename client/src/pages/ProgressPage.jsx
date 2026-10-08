@@ -83,7 +83,7 @@ export default function ProgressPage() {
             <span className="avatar avatar-lg" aria-hidden="true">{player.nickname.charAt(0).toUpperCase()}</span>
             <div className="player-info">
               <form className="rename-form" onSubmit={onRename} autoComplete="off">
-                <label className="field-label" htmlFor="rename-input">Agent nickname</label>
+                <label className="field-label" htmlFor="rename-input">Nickname</label>
                 <div className="name-row">
                   <input id="rename-input" type="text" maxLength={24} value={nickname} onChange={e => setNickname(e.target.value)} />
                   <button className="btn btn-secondary btn-sm" type="submit">Save</button>
