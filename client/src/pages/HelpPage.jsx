@@ -39,7 +39,7 @@ export default function HelpPage() {
             <li><strong>Practice:</strong> answer the Quick check questions, then try the hands-on activity (a green “Done” label appears).</li>
             <li><strong>Quiz:</strong> press <em>Start the quiz</em>, pick answers and read the instant feedback.</li>
             <li><strong>Results:</strong> see your score, stars, XP and badge. Review your answers, retry, or go to the next lesson.</li>
-            <li><strong>Final challenge:</strong> Lesson 10 is a timed, randomized quiz. Score 70%+ for a printable certificate.</li>
+            <li><strong>Final challenge:</strong> Lesson 10 is a timed quiz with random questions from every lesson. Score 70%+ to unlock the grand finale.</li>
           </ol>
 
           <h2 className="section-heading">Scoring</h2>

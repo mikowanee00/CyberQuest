@@ -88,52 +88,62 @@ export const LESSONS = [
     },
     quiz: [
       {
-        type: 'mcq',
-        prompt: `Which statement best describes phishing?`,
-        options: [
-          `A virus that spreads through USB drives`,
-          `A trick where attackers pretend to be a trusted source to steal information`,
-          `A way to speed up your internet connection`,
-          `A type of firewall that blocks hackers`
-        ],
-        answer: 1,
-        explain: `Phishing is social trickery: the attacker impersonates someone you trust so you willingly hand over information or money.`
-      },
-      {
-        type: 'tf',
-        prompt: `Phishing only happens through email.`,
-        answer: false,
-        explain: `Phishing also arrives by text (smishing), phone calls (vishing), social media messages and QR codes (quishing).`
-      },
-      {
-        type: 'mcq',
-        prompt: `A message says: “Your student account will be DELETED in 2 hours unless you verify now!” Which tactic is it using?`,
-        options: [`Curiosity`, `Urgency and fear`, `Gratitude`, `Humour`],
-        answer: 1,
-        explain: `Short deadlines and threats create panic so you act before you think — a classic phishing tactic.`
-      },
-      {
-        type: 'mcq',
-        prompt: `You get a text message with a link claiming to be from a delivery company. What is this type of attack called?`,
-        options: [`Vishing`, `Whaling`, `Smishing`, `Quishing`],
-        answer: 2,
-        explain: `Smishing = SMS + phishing. Delivery-fee texts are one of the most common examples.`
-      },
-      {
         type: 'verdict',
-        prompt: `Is this email safe or a phishing attempt?`,
+        prompt: `Your professor “shared a file” with you. Safe or phishing?`,
         visual: {
           type: 'email',
-          fromName: `Northbridge Bank Security`,
-          fromAddr: `alerts@northbridge-secure-login.co`,
-          subject: `Unusual sign-in attempt detected`,
-          body: `<p>Dear valued customer,</p>
-                 <p>We detected suspicious activity on your account. Confirm your identity within <strong>12 hours</strong> or your account will be locked.</p>
-                 <p><span class="v-btn" data-href="http://northbridge-secure-login.co/verify" tabindex="0">Verify Now</span></p>`
+          fromName: `Dr. Elena Morris via DocShare`,
+          fromAddr: `no-reply@docshare-files.net`,
+          subject: `Elena shared “Midterm grades – FINAL.xlsx” with you`,
+          body: `<p>Dr. Elena Morris has shared a spreadsheet with you.</p>
+                 <p>To view it, sign in with your <strong>Springfield State email and password</strong>.</p>
+                 <p><span class="v-btn" data-href="https://docshare-files.net/auth/springfieldstate-login" tabindex="0">Open in DocShare</span></p>`
         },
         options: [`✅ Safe`, `🎣 Phishing`],
         answer: 1,
-        explain: `Red flags: a look-alike domain (northbridge-secure-login.co), a generic greeting and a scary 12-hour deadline. Open your banking app directly instead.`
+        explain: `Curiosity bait (“grades”!) plus a request to type your school password on a site that isn't your school's. A real shared file opens from your school account, not a random login page.`
+      },
+      {
+        type: 'mcq',
+        prompt: `Which of these is SPEAR phishing rather than ordinary phishing?`,
+        options: [
+          `A message naming your real soccer club, your coach and Saturday's match, asking you to pay the “tournament fee” through a link`,
+          `“Your account will be closed” sent to 50,000 random addresses`,
+          `A pop-up saying you are the 1,000,000th visitor and won a phone`,
+          `A text from an unknown number saying “a package” is delayed`
+        ],
+        answer: 0,
+        explain: `Spear phishing is personal: the attacker researched you (club, coach, match) so the message feels real. The others are sent to everyone and hope someone bites.`
+      },
+      {
+        type: 'mcq',
+        prompt: `An email from “your bank” uses your full name, shows the last 4 digits of your card correctly and has zero typos. It asks you to “verify your identity” through a link. What's the smartest conclusion?`,
+        options: [
+          `It's real — a scammer couldn't know those details`,
+          `It could still be phishing — details like these leak in data breaches. Open the bank's app yourself instead`,
+          `It's real because there are no spelling mistakes`,
+          `Reply to the email and ask if it's genuine`
+        ],
+        answer: 1,
+        explain: `Names and last-4 digits are often stolen in data breaches, and good grammar is easy. The safe move never changes: go to the bank yourself, not through the link. Replying just reaches the scammer.`
+      },
+      {
+        type: 'tf',
+        prompt: `A message that makes you feel excited or curious (not scared) can still be phishing.`,
+        answer: true,
+        explain: `“You have a secret admirer”, “See who viewed your profile”, “You won!” — good feelings rush you just as well as fear does.`
+      },
+      {
+        type: 'mcq',
+        prompt: `Oops — you clicked a phishing link, but you did NOT type anything or download anything. What's the best next move?`,
+        options: [
+          `Go back and type fake details to waste the scammer's time`,
+          `Nothing at all — clicking can never cause any problem`,
+          `Close the page, run a security scan, and report the message`,
+          `Forward the email to friends so they can see it`
+        ],
+        answer: 2,
+        explain: `Close it, scan, report. Feeding fake details still confirms your account is active, and forwarding spreads the trap. Usually just opening a page is low-risk, but a quick scan is cheap insurance.`
       }
     ]
   },
@@ -216,62 +226,62 @@ export const LESSONS = [
     },
     quiz: [
       {
+        type: 'mcq',
+        prompt: `Link detective 🔍 Which of these REALLY goes to northbridge.com?`,
+        options: [
+          `https://northbridge.com.account-check.net/login`,
+          `https://northbridge-com.secure-login.org`,
+          `https://www.northbr1dge.com/login`,
+          `https://login.northbridge.com/account`
+        ],
+        answer: 3,
+        explain: `Read the domain just before the first single “/”. “login.northbridge.com” is a sub-address of northbridge.com — fine. The others end in account-check.net, secure-login.org, or swap “i” for “1”.`
+      },
+      {
         type: 'verdict',
-        prompt: `Is this email safe or a phishing attempt?`,
+        prompt: `This one looks a bit scary. Safe or phishing?`,
         visual: {
           type: 'email',
-          fromName: `Springfield State IT Services`,
-          fromAddr: `it-news@springfieldstate.edu`,
-          subject: `Scheduled maintenance this Saturday`,
+          fromName: `Springfield State IT Security`,
+          fromAddr: `security@springfieldstate.edu`,
+          subject: `New sign-in to your student account`,
           body: `<p>Hi Jordan,</p>
-                 <p>The student portal will be unavailable this Saturday from 2:00–4:00 AM for scheduled maintenance. <strong>No action is needed.</strong></p>
-                 <p>Updates will be posted on the IT status page in the portal.</p>
-                 <p>— IT Services</p>`
+                 <p>We noticed a new sign-in to your account from <strong>Chrome on Windows</strong> (Springfield, US) at 9:14 AM.</p>
+                 <p>If this was you, you don't need to do anything. If it wasn't, open the student portal and choose <strong>Security → Change password</strong>.</p>`
         },
         options: [`✅ Safe`, `🎣 Phishing`],
         answer: 0,
-        explain: `This one is fine: it comes from the university's real domain, uses your name, asks for nothing and contains no links or attachments.`
+        explain: `Scary topic, but every sign is good: the real .edu address, your name, no link, no attachment, and it tells you to go to the portal yourself. Not every alert is a trap!`
       },
       {
         type: 'mcq',
-        prompt: `What is the REAL domain in this web address?  https://northbridge.com.secure-login.info/account`,
-        options: [`northbridge.com`, `secure-login.info`, `account`, `https`],
-        answer: 1,
-        explain: `Read the part just before the first single “/”. The domain is secure-login.info — “northbridge.com” is only a sub-domain decoy.`
+        prompt: `Your shift manager “Jessica Lin” emails from jessica.lin.store@freemail.com: “Busy with a customer — can you buy 3 gift cards for her and send me photos of the codes? I'll pay you back today.” What's the BIGGEST red flag?`,
+        options: [
+          `A work request from a personal free-email address, asking for gift-card codes`,
+          `She signed with her first name only`,
+          `The email is very short`,
+          `She promised to pay you back the same day`
+        ],
+        answer: 0,
+        explain: `Anyone can create “jessica.lin.store” on a free email site. Pair that with gift-card codes (untraceable cash) and it's a classic boss scam. Call Jessica on her known number.`
       },
       {
-        type: 'verdict',
-        prompt: `Is this email safe or a phishing attempt?`,
-        visual: {
-          type: 'email',
-          fromName: `HR Department`,
-          fromAddr: `hr.payroll.department@freemail.com`,
-          subject: `Salary adjustment – CONFIDENTIAL`,
-          body: `<p>Hello,</p>
-                 <p>Please review the attached document to see your salary increase. You must <strong>enable macros</strong> to view the file.</p>`,
-          attachment: `Salary_Update.docm`
-        },
-        options: [`✅ Safe`, `🎣 Phishing`],
+        type: 'mcq',
+        prompt: `A classmate's account sends you an unexpected attachment with “here u go 👍”. Which is the SAFEST thing to do?`,
+        options: [
+          `Open it — it's from someone you know`,
+          `Ask the classmate (by text or in person) whether they really sent it before opening`,
+          `Open it, but only if it's a .zip file`,
+          `Open it and click “Enable Content” if it asks`
+        ],
         answer: 1,
-        explain: `HR would not use a free email account, and “enable macros” on an unexpected document is a classic way to install malware.`
+        explain: `Hacked accounts message all their contacts. A 10-second check with your classmate beats a week of cleaning up malware.`
       },
       {
         type: 'tf',
-        prompt: `If an email shows the company's correct logo, it must be real.`,
+        prompt: `If you hover over a link and the address matches the text exactly, the email is definitely safe.`,
         answer: false,
-        explain: `Logos are easy to copy. Always check the sender's address, the links and what the email is asking you to do.`
-      },
-      {
-        type: 'mcq',
-        prompt: `You are not sure whether an email from your bank is real. What is the SAFEST next step?`,
-        options: [
-          `Reply to the email and ask if it is real`,
-          `Click the link but do not type anything`,
-          `Open the bank's app or type its web address yourself`,
-          `Forward it to friends and ask what they think`
-        ],
-        answer: 2,
-        explain: `Contact the organization through a channel you already trust. Replying goes straight to the scammer, and even clicking can be risky.`
+        explain: `The link check is just one clue. The email could still ask you to call a fake phone number, open an attachment or reply with information. Check the sender and the request too.`
       }
     ]
   },
@@ -322,52 +332,52 @@ export const LESSONS = [
     quiz: [
       {
         type: 'mcq',
-        prompt: `Which of these passwords is the strongest?`,
-        options: [`P@ssw0rd!`, `Fluffy2005`, `violin-cactus-orbit-pancake`, `qwerty123456`],
+        prompt: `Crack-time challenge ⏱️ Which password would take an attacker the LONGEST to crack?`,
+        options: [`Tr0ub4dor&3`, `P@$$w0rd2026!`, `correct-horse-battery-staple`, `Qx7!pZ`],
         answer: 2,
-        explain: `The four-word passphrase is by far the longest and is not based on a common word or pattern.`
+        explain: `Length wins. The 28-character passphrase has far more possible combinations than the short “complex” ones — and attackers already know tricks like @ for a and 0 for o.`
+      },
+      {
+        type: 'mcq',
+        prompt: `“Liverpool1892” (her team + its founding year) is Maya's password on 6 sites. One of them gets breached. Which statement is TRUE?`,
+        options: [
+          `Only the breached site is at risk`,
+          `She's safe because the password has letters and numbers`,
+          `She's safe if she changes her username`,
+          `All 6 accounts are at risk, and the password was guessable anyway`
+        ],
+        answer: 3,
+        explain: `Attackers try leaked passwords on other sites (credential stuffing). And a team plus a year is one of the first patterns cracking tools try.`
       },
       {
         type: 'tf',
-        prompt: `Using the same strong password on every website is safe, as long as it is long.`,
+        prompt: `Updating your password by changing the number each year (Summer2025 → Summer2026) keeps you safe.`,
         answer: false,
-        explain: `If any one site is breached, attackers will try that password everywhere (credential stuffing). Every account needs its own password.`
+        explain: `Attackers who see the old password will simply try the next number. A new password should have nothing in common with the old one.`
       },
       {
         type: 'mcq',
-        prompt: `What is “credential stuffing”?`,
+        prompt: `Which is the SAFEST way to keep track of 40 different passwords?`,
         options: [
-          `Adding extra symbols to make a password longer`,
-          `Trying usernames and passwords leaked from one site on many other sites`,
-          `Storing passwords in a password manager`,
-          `Sharing your password with a trusted friend`
+          `A password manager locked with a strong master passphrase and 2FA`,
+          `A note on your phone called “Passwords”`,
+          `A spreadsheet on your laptop's desktop`,
+          `Saved in the browser of a shared library computer`
+        ],
+        answer: 0,
+        explain: `A password manager encrypts everything and only fills passwords on the correct websites. Notes, spreadsheets and shared computers are easy pickings.`
+      },
+      {
+        type: 'mcq',
+        prompt: `An attacker has a list of 10 million leaked passwords. Which of YOUR passwords is most at risk?`,
+        options: [
+          `A random 20-character password from a password manager`,
+          `“iloveyou123”, used on your gaming and email accounts`,
+          `A 4-word random passphrase used on only one site`,
+          `A passphrase with a symbol in the middle, used on one site`
         ],
         answer: 1,
-        explain: `Attackers automate logins with leaked credentials across hundreds of sites — which is why reuse is so dangerous.`
-      },
-      {
-        type: 'mcq',
-        prompt: `A friend's password is their dog's name plus their birth year (e.g. “Max2004”). What is the main problem?`,
-        options: [
-          `It is too long to remember`,
-          `It contains a number`,
-          `It uses personal details that are easy to find on social media`,
-          `There is no problem`
-        ],
-        answer: 2,
-        explain: `Pet names and birth years are often posted publicly, and they are among the first things attackers try.`
-      },
-      {
-        type: 'mcq',
-        prompt: `What is the best way to manage dozens of unique passwords?`,
-        options: [
-          `Write them on a sticky note on your monitor`,
-          `Use one password with a small change for each site`,
-          `Use a reputable password manager`,
-          `Save them in a phone note called “passwords”`
-        ],
-        answer: 2,
-        explain: `A password manager stores passwords encrypted, can generate strong ones, and fills them in only on the correct websites.`
+        explain: `“iloveyou123” is almost certainly on that list, and it's reused, so one hit opens two accounts.`
       }
     ]
   },
@@ -461,48 +471,54 @@ export const LESSONS = [
     },
     quiz: [
       {
-        type: 'mcq',
-        prompt: `A person in a delivery uniform with full arms asks you to hold the secure lab door open for them. What is this tactic called?`,
-        options: [`Tailgating`, `Phishing`, `Baiting`, `Encryption`],
-        answer: 0,
-        explain: `Tailgating (or piggybacking) uses politeness to get through a locked door. Offer to call someone to let them in instead.`
+        type: 'verdict',
+        prompt: `Legit or scam?`,
+        visual: { type: 'sms', sender: `Mark – Springfield State IT`, number: `+1 (555) 014-2290`, text: `Hi Jordan, this is Mark from IT. We're fixing a login bug on your account. You'll get a 6-digit code in a moment — please text it back to me so I can finish the fix. Thanks!` },
+        options: [`✅ Legit`, `🚩 Scam`],
+        answer: 1,
+        explain: `Friendly, uses your name, sounds technical… but asks for your verification code. That code is the key to your account. Real IT staff never need it.`
       },
       {
         type: 'mcq',
-        prompt: `You find a USB drive labelled “Exam Answers” in the library. What should you do?`,
+        prompt: `A delivery driver in a real-looking uniform, arms full of boxes, asks you to tap your key card so he can get into your office building. Which trick is this?`,
         options: [
-          `Plug it into your laptop to find the owner`,
-          `Hand it to library staff or IT without plugging it in`,
-          `Plug it into a library computer instead of yours`,
-          `Take it home and check it later`
+          `Baiting — he's tempting you with a package`,
+          `Quid pro quo — trading a delivery for access`,
+          `Tailgating, using the uniform as “authority” and your wish to be helpful`,
+          `Vishing — it's a request made with his voice`
         ],
-        answer: 1,
-        explain: `This is baiting. Unknown USB drives can carry malware that runs as soon as they are connected.`
+        answer: 2,
+        explain: `Tailgating is getting through a locked door on someone else's access. The uniform and full arms make saying no feel rude. Offer to call reception instead.`
+      },
+      {
+        type: 'mcq',
+        prompt: `A caller says they're from your bank's fraud team and there's a suspicious payment. What's the BEST response?`,
+        options: [
+          `Answer their security questions so they can confirm it's you`,
+          `Ask them to read your card number to prove they're real`,
+          `Stay on the line, but don't share any codes`,
+          `Say you'll call back, hang up, and call the number on the back of your card`
+        ],
+        answer: 3,
+        explain: `Hang up and call a number you trust. Scammers can fake caller ID and may already know your card number, so “proof” on the call means nothing.`
+      },
+      {
+        type: 'mcq',
+        prompt: `The “Dean” emails: “In a meeting, can't talk. Need a quick favor — reply ASAP.” If you reply, what's the scammer's most likely NEXT message?`,
+        options: [
+          `A request to buy gift cards or send money “for a student event”`,
+          `An invitation to a real meeting`,
+          `Your updated grades`,
+          `A thank-you note`
+        ],
+        answer: 0,
+        explain: `This is a warm-up: get you talking first, then ask for money. “Can't talk” stops you from calling to check.`
       },
       {
         type: 'tf',
-        prompt: `A caller who knows your name and student ID number must be legitimate.`,
-        answer: false,
-        explain: `Those details are often leaked or found online. Knowing a few facts about you does not prove who someone is.`
-      },
-      {
-        type: 'mcq',
-        prompt: `“This offer is only available to the first 10 students!” Which psychological trigger is this?`,
-        options: [`Authority`, `Scarcity`, `Helpfulness`, `Trust in technology`],
-        answer: 1,
-        explain: `Scarcity makes something feel valuable and pushes you to act quickly without thinking.`
-      },
-      {
-        type: 'mcq',
-        prompt: `The “Dean” emails you asking you to buy gift cards urgently and to keep it confidential. What is the best response?`,
-        options: [
-          `Buy them quickly — it's the Dean`,
-          `Reply and ask for more details`,
-          `Contact the Dean's office using the official university directory`,
-          `Send your own card details instead`
-        ],
-        answer: 2,
-        explain: `Gift cards + secrecy + urgency = scam. Verify using contact details you find yourself, not the ones in the message.`
+        prompt: `Social engineers often start by asking for something small and harmless (like your class schedule) before asking for something valuable.`,
+        answer: true,
+        explain: `Small favors build trust, and every bit of information makes the next lie more believable. It's called the “foot in the door” technique.`
       }
     ]
   },
@@ -576,47 +592,57 @@ export const LESSONS = [
     quiz: [
       {
         type: 'mcq',
-        prompt: `Which of these is the SAFEST to post publicly?`,
+        prompt: `Which post gives away the MOST answers to common password-reset security questions?`,
         options: [
-          `A photo of your new driver's license`,
-          `“Home alone all weekend!”`,
-          `A sunset photo with no location tag`,
-          `A photo of your concert ticket showing the barcode`
+          `“Happy 10th birthday to Biscuit, my first pet ever! 🐶”`,
+          `“Throwback to Maple Street Elementary, class of 2014, with Mom (née Garcia) ❤️”`,
+          `“Studying for finals, wish me luck 📚”`,
+          `“Rainy day again ☔”`
+        ],
+        answer: 1,
+        explain: `It reveals your elementary school AND your mother's maiden name, two classic security questions in one post. The pet post gives away one; the others give away none.`
+      },
+      {
+        type: 'mcq',
+        prompt: `You got front-row concert tickets 🎉 What's the safest way to show them off?`,
+        options: [
+          `Post the full ticket — it's only valid for one night`,
+          `Post a close-up of just the barcode so people can't see your name`,
+          `Post it, but cover the QR code/barcode and the order number`,
+          `Post the full ticket to your story — it disappears in 24 hours`
         ],
         answer: 2,
-        explain: `A sunset photo without location data reveals nothing about who you are, where you live or when you are away.`
+        explain: `The barcode IS the ticket. Anyone can copy it and get in before you. Stories can be screenshotted in a second.`
       },
       {
         type: 'tf',
-        prompt: `Quizzes like “Your superhero name = your mother's maiden name + your first street” are harmless fun.`,
+        prompt: `If your account is private, nothing you post can ever be seen by strangers.`,
         answer: false,
-        explain: `These quizzes are a sneaky way to collect common security-question answers.`
+        explain: `Followers can screenshot and share your posts, and fake accounts sometimes get accepted. Private helps a lot, but post as if it could go public.`
       },
       {
         type: 'mcq',
-        prompt: `A stranger with no mutual friends and a brand-new profile sends you a friend request. What should you do?`,
-        options: [`Accept — more followers is better`, `Accept and send them a message`, `Decline or ignore it`, `Reply with your phone number`],
-        answer: 2,
-        explain: `New profiles with no connections are often fake accounts used to collect information or start scams.`
-      },
-      {
-        type: 'mcq',
-        prompt: `When is the best time to post your vacation photos?`,
-        options: [`Before you leave`, `While you are at the airport`, `Every hour while you are away`, `After you return home`],
-        answer: 3,
-        explain: `Posting afterwards means nobody knows in real time that your home is empty.`
-      },
-      {
-        type: 'mcq',
-        prompt: `Which settings change MOST improves your privacy?`,
+        prompt: `A friend who's ALREADY on your friend list sends you a new friend request from a second account. What should you do?`,
         options: [
-          `Changing your profile picture`,
-          `Making your account private and limiting who sees your posts`,
-          `Posting more often`,
-          `Following more accounts`
+          `Accept — you already know them`,
+          `Accept, then ask for their password to make sure it's them`,
+          `Block your friend's original account`,
+          `Check with your friend another way first; it may be a cloned fake account`
         ],
-        answer: 1,
-        explain: `A private account controls who can see your information in the first place.`
+        answer: 3,
+        explain: `Scammers copy a real person's photos and name, then ask their friends for money or codes. A quick text to your friend settles it.`
+      },
+      {
+        type: 'mcq',
+        prompt: `Which photo detail is the most dangerous to leave in a public post?`,
+        options: [
+          `Your house number and street sign in the background`,
+          `Your favorite coffee cup`,
+          `Your cat sleeping on the couch`,
+          `The book you're reading`
+        ],
+        answer: 0,
+        explain: `Your house number and street together tell a stranger exactly where you live. Always check the background before you post.`
       }
     ]
   },
@@ -671,57 +697,52 @@ export const LESSONS = [
     quiz: [
       {
         type: 'mcq',
-        prompt: `What is an “evil twin” network?`,
+        prompt: `At Springfield Airport you see three open networks. The sign on the wall says “Free Wi-Fi: SPR-Airport-Guest”. Which do you join to check your flight?`,
+        options: [`Free_Airport_WiFi_FAST`, `SPR Airport Guest 2 (strongest signal)`, `SPR-Airport-Guest`],
+        answer: 2,
+        explain: `Use the exact name on the official sign. Look-alikes, especially “FAST” or a “2”, are classic evil twins, and a strong signal can just mean the attacker is sitting near you.`
+      },
+      {
+        type: 'mcq',
+        prompt: `On café Wi-Fi, your email suddenly shows “Your connection is not private” with a certificate warning. What do you do?`,
         options: [
-          `Two routers in the same house`,
-          `A fake hotspot that imitates a legitimate network`,
-          `A virus that copies your files`,
-          `A Wi-Fi signal booster`
+          `Click “Advanced → Proceed anyway”`,
+          `Refresh until the warning disappears`,
+          `Stop, disconnect from the Wi-Fi and use mobile data instead`,
+          `Turn off your antivirus — it might be blocking the page`
         ],
-        answer: 1,
-        explain: `Attackers create hotspots with convincing names so people connect to them instead of the real network.`
+        answer: 2,
+        explain: `On public Wi-Fi this warning can mean someone is intercepting your connection. Never click past it for email or banking.`
       },
       {
         type: 'tf',
-        prompt: `Checking your bank account on open airport Wi-Fi is perfectly safe if the connection is fast.`,
+        prompt: `The padlock (HTTPS) in the address bar means a website is trustworthy.`,
         answer: false,
-        explain: `Speed says nothing about safety. Open networks can be monitored — use mobile data or a VPN instead.`
+        explain: `The padlock only means the connection is encrypted. Scam sites get padlocks too — it says nothing about who runs the site.`
       },
       {
         type: 'mcq',
-        prompt: `What is the safest way to pay a bill while you are at a café?`,
+        prompt: `Which laptop setting is safest on public Wi-Fi?`,
         options: [
-          `The café's open Wi-Fi`,
-          `The network with the strongest signal`,
-          `Your phone's mobile data or personal hotspot`,
-          `Any network with “Free” in its name`
+          `Network discovery and file sharing ON, so you can share files with friends`,
+          `Bluetooth set to “discoverable by everyone”`,
+          `“Automatically join open networks” ON`,
+          `Network set to “Public” with file sharing OFF`
         ],
-        answer: 2,
-        explain: `Your own mobile connection is not shared with strangers, making it the safest option.`
+        answer: 3,
+        explain: `“Public” mode hides your laptop from other devices on the network. Sharing, discoverable Bluetooth and auto-join all open doors for strangers.`
       },
       {
         type: 'mcq',
-        prompt: `What does a VPN do on public Wi-Fi?`,
+        prompt: `Which of these does a VPN NOT protect you from?`,
         options: [
-          `Encrypts your traffic so others on the network cannot read it`,
-          `Makes you completely invisible online`,
-          `Doubles your internet speed`,
-          `Removes all viruses from your device`
+          `You typing your password into a phishing website`,
+          `Other people on the café Wi-Fi reading your traffic`,
+          `The Wi-Fi owner seeing which websites you visit`,
+          `Someone snooping on unencrypted data on the network`
         ],
         answer: 0,
-        explain: `A VPN creates an encrypted tunnel. It helps a lot, but it does not make you invisible or replace antivirus software.`
-      },
-      {
-        type: 'mcq',
-        prompt: `You have finished using hotel Wi-Fi. What is a good habit?`,
-        options: [
-          `Leave file sharing turned on`,
-          `“Forget” the network and turn off auto-join`,
-          `Post the Wi-Fi password online for others`,
-          `Stay connected so it is faster next time`
-        ],
-        answer: 1,
-        explain: `Forgetting the network stops your device from automatically joining it — or an evil twin with the same name — later.`
+        explain: `A VPN protects the connection, not your decisions. If you hand your password to a fake site, the VPN delivers it safely… to the scammer.`
       }
     ]
   },
@@ -786,52 +807,47 @@ export const LESSONS = [
     quiz: [
       {
         type: 'mcq',
-        prompt: `Which combination is TRUE two-factor authentication?`,
-        options: [
-          `Password + security question`,
-          `Password + code from an authenticator app`,
-          `Password + PIN`,
-          `Two different passwords`
-        ],
+        prompt: `Which is the STRONGEST second factor?`,
+        options: [`A code sent by SMS`, `A hardware security key or passkey`, `A code sent by email`, `A security question`],
         answer: 1,
-        explain: `Only this option combines two different factor types: something you know + something you have.`
+        explain: `Security keys and passkeys only work on the real website, so they can't be phished. SMS and email codes can be stolen, and a security question isn't a second factor at all.`
       },
       {
         type: 'mcq',
-        prompt: `Your phone shows “Approve sign-in?” but you are not logging in to anything. What do you do?`,
+        prompt: `A text arrives: “Your verification code is 482913. Don't share it with anyone.” You did NOT try to log in. What does this most likely mean?`,
         options: [
-          `Approve it so the messages stop`,
-          `Deny it and change your password`,
-          `Ignore it and hope it goes away`,
-          `Approve it, then log out`
+          `It's a harmless glitch`,
+          `Your phone has a virus`,
+          `Someone has your password and is trying to log in`,
+          `Your account was deleted`
         ],
-        answer: 1,
-        explain: `An unexpected prompt means someone already has your password. Deny it, change the password, and report it if it is a school account.`
+        answer: 2,
+        explain: `The code was sent because someone got past step 1 (your password). 2FA just stopped them. Change that password now.`
+      },
+      {
+        type: 'mcq',
+        prompt: `Right after that text, someone calls: “Sorry, we sent you a code by mistake — please read it to me so we can cancel it.” What's really going on?`,
+        options: [
+          `They're helping you cancel a fraud attempt`,
+          `It's an automatic bank security check`,
+          `They're trying to send you a refund`,
+          `They need your code to log in as you`
+        ],
+        answer: 3,
+        explain: `There's no such thing as “cancelling” a code by reading it out. The caller is the attacker, and the code is the last thing they need.`
       },
       {
         type: 'tf',
-        prompt: `SMS text-message codes are the strongest form of 2FA.`,
+        prompt: `With 2FA turned on, it doesn't matter if your password is weak.`,
         answer: false,
-        explain: `Security keys, passkeys and authenticator apps are stronger. SMS can be intercepted through SIM-swapping — though it is still much better than no 2FA.`
+        explain: `2FA is a second lock, not a replacement for the first one. A weak password makes attackers' lives easier, and some 2FA methods (like SMS) can be bypassed.`
       },
       {
         type: 'mcq',
-        prompt: `A fingerprint scan belongs to which factor?`,
-        options: [`Something you know`, `Something you have`, `Something you are`, `Somewhere you are`],
-        answer: 2,
-        explain: `Fingerprints, faces and voices are biometric — “something you are”.`
-      },
-      {
-        type: 'mcq',
-        prompt: `Why should you save your 2FA backup codes?`,
-        options: [
-          `So you can share them with friends`,
-          `So you can still log in if you lose your phone`,
-          `They replace your password`,
-          `You do not need to — they are useless`
-        ],
-        answer: 1,
-        explain: `Backup codes are your emergency key if your phone is lost or broken. Store them somewhere safe and private.`
+        prompt: `You can only set up 2FA on ONE account today. Which should it be?`,
+        options: [`Your email`, `A recipe website`, `A game you stopped playing`, `A weather app`],
+        answer: 0,
+        explain: `Your email is the master key: “forgot password” links for almost every other account go there. Protect it first.`
       }
     ]
   },
@@ -922,54 +938,58 @@ export const LESSONS = [
     },
     quiz: [
       {
-        type: 'mcq',
-        prompt: `Which payment request is the BIGGEST red flag?`,
-        options: [
-          `Paying by credit card on a store's official website`,
-          `Paying with gift cards`,
-          `Paying tuition through the school's official portal`,
-          `Paying in person at a shop`
-        ],
+        type: 'verdict',
+        prompt: `Great deal or scam?`,
+        visual: { type: 'listing', title: `PS5 bundle + 2 controllers`, price: `$150`, text: `Brand new, still sealed! Moving abroad tomorrow so must sell TODAY. Payment by gift card or crypto only, I'll ship it to you.`, seller: `Posted by “Alex_88” · account created 2 days ago` },
+        options: [`✅ Legit`, `🚩 Scam`],
         answer: 1,
-        explain: `Gift cards are like cash — untraceable and impossible to get back. No real business or government agency asks to be paid this way.`
+        explain: `Way below the normal price, a brand-new account, “must sell today”, and gift card or crypto payment. Every red flag in one listing.`
       },
       {
         type: 'verdict',
-        prompt: `Is this text message legit or a scam?`,
-        visual: { type: 'sms', sender: `+44 7700 900123`, text: `ParcelPost: Your package #PX2291 could not be delivered due to an unpaid customs fee ($1.99). Pay now to avoid return: parcelpost-redelivery.top/pay` },
+        prompt: `Money talk. Legit or scam?`,
+        visual: {
+          type: 'email',
+          fromName: `Springfield State Financial Aid`,
+          fromAddr: `finaid@springfieldstate.edu`,
+          subject: `Your fall scholarship has been applied`,
+          body: `<p>Hi Jordan,</p>
+                 <p>Your Merit Scholarship (<strong>$1,500</strong>) has been applied to your fall balance.</p>
+                 <p>You can see the details in the student portal under <strong>Finances</strong>. No action is needed.</p>`
+        },
         options: [`✅ Legit`, `🚩 Scam`],
-        answer: 1,
-        explain: `A random international number, a tiny “fee” to get your card details, and a strange .top web address. Check deliveries on the official app instead.`
+        answer: 0,
+        explain: `It comes from the real .edu address, asks for nothing, includes no link or fee, and points you to the portal yourself. Scholarship scams always want a “processing fee” or your details.`
       },
       {
         type: 'mcq',
-        prompt: `A “job” sends you a check, asks you to deposit it and send part of the money back. Why is this a scam?`,
+        prompt: `A buyer for your bike “accidentally” sends you a $500 check instead of $150 and asks you to send back the extra $350. What happens next?`,
         options: [
-          `It is not — this is how remote jobs work`,
-          `The check will bounce after you have already sent real money`,
-          `Banks prefer this kind of payment`,
-          `It is just a test of your honesty`
+          `You keep $150 and everyone's happy`,
+          `The check bounces days later, and you've lost the $350 you sent`,
+          `Your bank covers any problems with checks`,
+          `The buyer sends you a second check to fix it`
         ],
         answer: 1,
-        explain: `Fake checks can take days to bounce. By then your money is gone and you owe the bank the full amount.`
+        explain: `This is the overpayment scam. Banks make check money available before they confirm it's real, so when it bounces, the $350 you sent is gone.`
+      },
+      {
+        type: 'mcq',
+        prompt: `A friendly person you met online weeks ago says they made huge profits on a crypto trading app and offers to help you start. What's this called?`,
+        options: [
+          `A legit tip from a friend`,
+          `Smishing`,
+          `An investment (“pig butchering”) scam`,
+          `Tailgating`
+        ],
+        answer: 2,
+        explain: `Scammers build a relationship for weeks (“fattening the pig”), then show fake profits on a fake app. Deposits can never be withdrawn.`
       },
       {
         type: 'tf',
-        prompt: `Real tech-support companies show pop-up warnings asking you to call them immediately.`,
-        answer: false,
-        explain: `Legitimate companies never do this. Pop-ups with phone numbers are scams designed to get remote access to your computer or your money.`
-      },
-      {
-        type: 'mcq',
-        prompt: `You think you have been scammed. What should you do FIRST?`,
-        options: [
-          `Keep it secret because it is embarrassing`,
-          `Pay the scammer more so they fix the problem`,
-          `Contact your bank, change your passwords and report it`,
-          `Delete everything and forget about it`
-        ],
-        answer: 2,
-        explain: `Acting quickly can stop payments and protect your accounts. Scams happen to smart people — reporting is nothing to be ashamed of.`
+        prompt: `Scammers can make a call or text appear to come from your bank's real phone number.`,
+        answer: true,
+        explain: `Caller ID can be faked (“spoofed”). A familiar number proves nothing. Hang up and call the number on your card.`
       }
     ]
   },
@@ -1042,52 +1062,57 @@ export const LESSONS = [
     quiz: [
       {
         type: 'mcq',
-        prompt: `Which of these is sensitive personally identifiable information (PII)?`,
-        options: [`Your favorite color`, `Your Social Security number`, `Your favorite movie`, `Today's weather`],
-        answer: 1,
-        explain: `An SSN can be used to open credit and commit identity theft, so it needs strong protection.`
+        prompt: `Which request for your Social Security number is NORMAL?`,
+        options: [
+          `A free T-shirt survey asks for it`,
+          `A text from “the IRS” asks you to confirm it`,
+          `A dating-app match asks for it to “verify” you`,
+          `Your new employer's HR portal asks for it for tax forms`
+        ],
+        answer: 3,
+        explain: `Employers need it for tax paperwork, through their official HR system. Surveys, texts and online matches never do.`
       },
       {
         type: 'mcq',
-        prompt: `A website offering a “free T-shirt” asks for your Social Security number. What should you do?`,
+        prompt: `You're selling your old phone. What should you do FIRST?`,
         options: [
-          `Enter it — the T-shirt is free`,
-          `Enter a friend's number instead`,
-          `Leave the site — no giveaway needs your SSN`,
-          `Email it to them instead`
+          `Back it up, sign out of your accounts, remove the SIM and do a full factory reset`,
+          `Delete your photos one by one`,
+          `Just turn it off and hand it over`,
+          `Remove the case and screen protector`
         ],
-        answer: 2,
-        explain: `Asking for highly sensitive data in exchange for a tiny reward is a data-harvesting scam.`
+        answer: 0,
+        explain: `Deleting photos leaves accounts, messages and saved passwords behind. Signing out and a factory reset wipe everything properly.`
+      },
+      {
+        type: 'mcq',
+        prompt: `Which of these is the safest to post publicly?`,
+        options: [
+          `Your new driver's license — first time driving! 🚗`,
+          `A café selfie with nothing personal in the background`,
+          `Your boarding pass, barcode and all`,
+          `Your keys on the kitchen table next to mail showing your address`
+        ],
+        answer: 1,
+        explain: `IDs, barcodes and addressed mail are gold for identity thieves. A selfie with a clean background shares the moment, not your data.`
       },
       {
         type: 'tf',
-        prompt: `Logging out of shared computers in the campus lab helps protect your personal information.`,
-        answer: true,
-        explain: `If you stay logged in, the next person could access your email, files and accounts.`
+        prompt: `Once you delete a public post, it's gone forever.`,
+        answer: false,
+        explain: `Screenshots, shares and web archives can keep it alive. Think before you post, not after.`
       },
       {
         type: 'mcq',
-        prompt: `Which habit best protects your phone's data if it is lost?`,
+        prompt: `A letter says a credit card was opened in your name, but you never applied for one. What's the best FIRST move?`,
         options: [
-          `No screen lock, so it is easy to use`,
-          `A sticker with your home address on the back`,
-          `A strong screen lock plus “find my device” / remote wipe turned on`,
-          `Saving all your passwords in a notes app`
+          `Ignore it — it's probably a mistake`,
+          `Call the phone number printed in the letter right away`,
+          `Look up the card company's official fraud number yourself, report it, and check your credit report`,
+          `Post about it on social media to warn friends`
         ],
         answer: 2,
-        explain: `A screen lock stops strangers getting in, and remote wipe lets you erase your data if the phone is gone for good.`
-      },
-      {
-        type: 'mcq',
-        prompt: `Why should you install software and app updates promptly?`,
-        options: [
-          `Updates fix security holes that attackers exploit`,
-          `Updates only add new emojis`,
-          `Updates make your battery die faster`,
-          `There is no real reason`
-        ],
-        answer: 0,
-        explain: `Many attacks use known weaknesses that have already been fixed — but only on devices that installed the update.`
+        explain: `Act fast, but through numbers you find yourself. The letter itself could be part of a scam. Checking your credit report shows what else was opened.`
       }
     ]
   },
@@ -1103,7 +1128,7 @@ export const LESSONS = [
     color: '#eab308',
     minutes: 6,
     badge: `Cyber Champion`,
-    summary: `Put everything together! Ten random questions from every lesson, against the clock. Score 70% or more to earn your certificate.`,
+    summary: `Put everything together! Ten random questions from every lesson, against the clock. Score 70% or more for a big finish. 🏆`,
     sections: [
       {
         heading: `Put it all together`,
@@ -1114,8 +1139,8 @@ export const LESSONS = [
         body: `<ul>
                  <li>⏱️ <strong>10 questions</strong>, <strong>25 seconds</strong> each.</li>
                  <li>⚡ Answer correctly <strong>and</strong> quickly for up to <strong>+5 bonus XP</strong> per question.</li>
-                 <li>⌛ If time runs out, the question counts as wrong.</li>
-                 <li>🏆 Score <strong>70% or more</strong> to unlock your printable certificate.</li>
+                 <li>⌛ If time runs out, the question counts as wrong. These are the trickiest questions in CyberQuest, so read every option!</li>
+                 <li>🏆 Score <strong>70% or more</strong> to unlock the grand finale.</li>
                </ul>
                <p class="callout">🧠 <strong>Quick refresher:</strong> check the sender, hover over links, never share passwords or codes, use passphrases + 2FA, avoid open Wi-Fi for sensitive tasks, and be suspicious of anything urgent.</p>`
       }
@@ -1131,61 +1156,59 @@ export const LESSONS = [
     quiz: [
       {
         type: 'verdict',
-        prompt: `Is this email safe or a phishing attempt?`,
-        visual: {
-          type: 'email',
-          fromName: `Campus Bookstore`,
-          fromAddr: `orders@springfieldstate.edu`,
-          subject: `Your order #48213 is ready for pickup`,
-          body: `<p>Hi Sam,</p><p>Your textbook order is ready at the Campus Bookstore counter. Please bring your student ID. Opening hours: 9 AM – 6 PM.</p>`
-        },
-        options: [`✅ Safe`, `🎣 Phishing`],
-        answer: 0,
-        explain: `It uses the official domain and your name, matches an order you placed, and asks you to do something in person — no links or data requests.`
-      },
-      {
-        type: 'verdict',
-        prompt: `Is this text message legit or a scam?`,
+        prompt: `Family emergency? Legit or scam?`,
         visual: { type: 'sms', sender: `Unknown number`, number: `+1 (555) 010-4477`, text: `Hi sweetie it's Mom 💕 I dropped my phone in water, this is my new number. Can you send me $200 in gift cards? I can't talk right now, I'll explain later.` },
         options: [`✅ Legit`, `🚩 Scam`],
         answer: 1,
-        explain: `The “Hi Mom” scam: a new number, a reason they cannot call, and an urgent gift-card request. Call your mom on her known number to check.`
+        explain: `The “Hi Mom” scam: a new number, a reason they can't call, and an urgent gift-card request. Call your mom on her known number to check.`
       },
       {
         type: 'mcq',
-        prompt: `You see a QR code sticker on a parking meter that says “Scan to pay”. What is the safest choice?`,
+        prompt: `A QR code sticker on a parking meter says “Scan to pay — faster!” What's the safest choice?`,
         options: [
           `Scan it and pay quickly`,
-          `Pay at the meter itself or through the city's official parking app`,
-          `Scan it and enter your card, but only for small amounts`,
-          `Share the QR code with friends`
+          `Scan it, but only pay small amounts`,
+          `Scan it and check the page has a padlock`,
+          `Pay at the meter itself or through the city's official parking app`
         ],
-        answer: 1,
-        explain: `Fake QR stickers placed over real ones (quishing) lead to fake payment pages. Use the official payment method.`
+        answer: 3,
+        explain: `Fake QR stickers placed over real ones (“quishing”) lead to fake payment pages, and those can have padlocks too. Use the official payment method.`
       },
       {
         type: 'mcq',
-        prompt: `Which overall strategy best protects your online accounts?`,
+        prompt: `Which link is MOST likely the real student portal?`,
         options: [
-          `One very complex password used everywhere`,
-          `Unique passphrases stored in a password manager, plus 2FA`,
-          `Short passwords you change every week`,
-          `Your birthday with a symbol at the end`
-        ],
-        answer: 1,
-        explain: `Unique + long + second factor is the winning combination.`
-      },
-      {
-        type: 'mcq',
-        prompt: `Which link is MOST likely to be the real student portal?`,
-        options: [
+          `https://portal.springfieldstate.edu/home`,
           `https://springfieldstate.edu.login-portal.net`,
           `http://springfie1dstate.edu/portal`,
-          `https://springfieldstate.edu/portal`,
           `https://springfieldstate-portal.co/login`
         ],
+        answer: 0,
+        explain: `Only “portal.springfieldstate.edu” ends in the real domain. The others end in login-portal.net, swap “l” for “1”, or use a look-alike .co domain.`
+      },
+      {
+        type: 'mcq',
+        prompt: `Your friend's account messages you: “Vote for me in this contest!! 🙏” The link asks you to log in to your social media account to vote. What's the best move?`,
+        options: [
+          `Log in and vote — it's your friend`,
+          `Don't log in. Message your friend another way — their account is probably hacked`,
+          `Log in with a different password to be safe`,
+          `Share the link so more people vote`
+        ],
+        answer: 1,
+        explain: `“Vote for me” links are a top way hacked accounts spread. Logging in hands over your account too, and it then messages all YOUR friends.`
+      },
+      {
+        type: 'mcq',
+        prompt: `You just realized you typed your email password into a fake login page 😱 What should you do FIRST?`,
+        options: [
+          `Delete the phishing email`,
+          `Tell your friends what happened`,
+          `Change your email password, plus anywhere you reused it, and turn on 2FA`,
+          `Run a virus scan`
+        ],
         answer: 2,
-        explain: `Only this one has the real domain (springfieldstate.edu) right before the first “/”. The others use a different domain, a look-alike “1” or no HTTPS.`
+        explain: `Speed matters. Lock the attacker out by changing the password before they do. Everything else can come after.`
       }
     ]
   }

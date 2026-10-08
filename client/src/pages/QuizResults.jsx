@@ -1,6 +1,6 @@
 /* =====================================================================
- * pages/QuizResults.jsx — Score ring, rank title, badge, certificate
- * and a review of every answer.
+ * pages/QuizResults.jsx — Score ring, rank title, badge, the big
+ * finale for passing the final challenge, and a review of every answer.
  * ===================================================================== */
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,16 @@ import { SCORING, resultTitleFor, starsForPercent } from '../logic/scoring.js';
 import { sound, confetti } from '../logic/effects.js';
 
 const CIRCUMFERENCE = 2 * Math.PI * 52;
+
+/* Skills the player has unlocked, shown in the finale */
+const SUPERPOWERS = [
+  ['🎣', 'Phish radar', 'You spot fake emails and texts from a mile away.'],
+  ['🔗', 'Link X-ray', 'You read where a link really goes before you click.'],
+  ['🔑', 'Passphrase power', 'You build passwords hackers hate.'],
+  ['🛡️', 'Human firewall', 'Smooth talkers and fake “IT staff” get a polite no.'],
+  ['📶', 'Wi-Fi sense', 'You know which networks to trust (and which are evil twins).'],
+  ['🚩', 'Scam sniffer', 'Gift cards, fake jobs, too-good deals: you see right through them.']
+];
 
 export default function QuizResults({ lesson, result, outcome, onRetry }) {
   const { player, stats } = usePlayer();
@@ -35,7 +45,12 @@ export default function QuizResults({ lesson, result, outcome, onRetry }) {
       celebrated.current = true;
       if (passed) sound.play('win');
       if (outcome?.newBadge) toast(<><Icon name="award" /> Badge unlocked: <strong>{lesson.badge}</strong></>, 'badge');
-      if (result.percent === 100 || outcome?.newBadge) confetti.burst();
+      if (lesson.final && passed) {
+        confetti.burst(220);
+        setTimeout(() => confetti.burst(160), 700); // a second wave for the grand finale
+      } else if (result.percent === 100 || outcome?.newBadge) {
+        confetti.burst();
+      }
     }
     return () => cancelAnimationFrame(frame);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -75,34 +90,49 @@ export default function QuizResults({ lesson, result, outcome, onRetry }) {
         )}
 
         {!passed && (
-          <p className="muted">Score {SCORING.PASS_PERCENT}% or more to complete this lesson{lesson.final ? ' and unlock your certificate' : ' and earn the badge'}.</p>
+          <p className="muted">Score {SCORING.PASS_PERCENT}% or more to complete this lesson{lesson.final ? ' and unlock the grand finale' : ' and earn the badge'}.</p>
         )}
 
-        <div className="btn-row center">
-          <button type="button" className="btn btn-secondary" onClick={onRetry}><Icon name="refresh" /> {lesson.final ? 'New challenge' : 'Try again'}</button>
-          {!lesson.final && next && <Link className="btn btn-primary" to={`/lesson/${next.id}`}>Next: {next.title} <Icon name="arrowRight" /></Link>}
-          {lesson.final
-            ? <Link className="btn btn-primary" to="/progress"><Icon name="chart" /> See my progress</Link>
-            : <Link className="btn btn-ghost" to="/lessons"><Icon name="grid" /> All lessons</Link>}
-        </div>
+        {/* A passed final challenge shows its buttons in the finale below instead */}
+        {!(lesson.final && passed) && (
+          <div className="btn-row center">
+            <button type="button" className="btn btn-secondary" onClick={onRetry}><Icon name="refresh" /> {lesson.final ? 'New challenge' : 'Try again'}</button>
+            {!lesson.final && next && <Link className="btn btn-primary" to={`/lesson/${next.id}`}>Next: {next.title} <Icon name="arrowRight" /></Link>}
+            {lesson.final
+              ? <Link className="btn btn-primary" to="/progress"><Icon name="chart" /> See my progress</Link>
+              : <Link className="btn btn-ghost" to="/lessons"><Icon name="grid" /> All lessons</Link>}
+          </div>
+        )}
       </section>
 
       {lesson.final && passed && (
-        <section className="certificate" aria-label="Certificate">
-          <div className="cert-inner">
-            <span className="cert-seal"><Icon name="logo" /></span>
-            <p className="cert-kicker">Certificate of Completion</p>
-            <p className="cert-small">This certifies that</p>
-            <h2 className="cert-name">{player?.nickname || 'CyberQuest player'}</h2>
-            <p className="cert-small">has completed the <strong>CyberQuest Cybersecurity Awareness Game</strong> and earned the rank of</p>
-            <p className="cert-rank">{title.title.replace('!', '')}</p>
-            <p className="cert-meta">
-              Final challenge score: {result.score}/{result.total} ({result.percent}%) ·{' '}
-              {new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-            </p>
+        <section className="finale" aria-labelledby="finale-title">
+          <div className="finale-trophy" aria-hidden="true">🏆</div>
+          <p className="finale-kicker">Mission complete</p>
+          <h2 id="finale-title" className="finale-title">You did it, {player?.nickname || 'friend'}!</h2>
+          <p className="finale-lead">
+            You crushed the final challenge with <strong>{result.percent}%</strong>. Somewhere out there,
+            a scammer just sighed. 😎
+          </p>
+
+          <h3 className="finale-sub">Superpowers unlocked</h3>
+          <ul className="finale-powers">
+            {SUPERPOWERS.map(([emoji, name, text]) => (
+              <li key={name}>
+                <span className="finale-emoji" aria-hidden="true">{emoji}</span>
+                <span><strong>{name}</strong>{text}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="finale-mission">
+            <strong>Your next mission:</strong> share one tip with a friend or family member this week. Scams spread
+            when people don't know the signs, and now you do.
           </div>
-          <div className="btn-row center no-print">
-            <button type="button" className="btn btn-secondary" onClick={() => window.print()}><Icon name="printer" /> Print certificate</button>
+
+          <div className="btn-row center">
+            <Link className="btn btn-primary" to="/progress"><Icon name="award" /> See all my badges</Link>
+            <button type="button" className="btn btn-secondary" onClick={onRetry}><Icon name="refresh" /> Beat my score</button>
           </div>
         </section>
       )}

@@ -16,7 +16,9 @@
  * 13. Responsive breakpoints
  * 14. Sign-up, banners, loading
  * 15. Admin dashboard
- * 16. Print (certificate)
+ * 16. (removed)
+ * 17. Lesson step bar, fun facts, examples, quick check
+ * 18. Grand finale
  * ===================================================================== */
 
 /* ---------- 1. Design tokens ---------- */
@@ -775,16 +777,6 @@ li { margin-bottom: .35em; }
 .rv-q { font-weight: 700; }
 .rv-explain { color: var(--muted); }
 
-.certificate { margin-top: 20px; padding: 10px; border-radius: var(--radius); background: linear-gradient(135deg, #eab308, #f59e0b, #eab308); }
-.cert-inner { background: #fffdf5; color: #1f2937; border-radius: 10px; padding: 36px 24px; text-align: center; border: 2px solid #fde68a; }
-.cert-seal { display: inline-grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: #4f46e5; color: #fff; margin-bottom: 10px; }
-.cert-seal .icon { width: 32px; height: 32px; }
-.cert-kicker { font: 700 .85rem var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: #92400e; margin-bottom: 14px; }
-.cert-small { color: #4b5563; margin: 0 auto 6px; max-width: 46ch; }
-.cert-name { font: 700 clamp(1.8rem, 5vw, 2.6rem) var(--font-head); margin: 4px 0 10px; color: #1e1b4b; border-bottom: 2px solid #fde68a; display: inline-block; padding: 0 20px 6px; }
-.cert-rank { font: 700 1.5rem var(--font-head); color: #4f46e5; margin: 8px 0; }
-.cert-meta { font-size: .85rem; color: #6b7280; margin: 0; }
-.certificate .btn-row { padding: 12px 0 4px; }
 
 /* ---------- 11. Progress & help ---------- */
 .progress-top { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; }
@@ -1022,14 +1014,6 @@ td.wrap { white-space: normal; min-width: 280px; }
 .export-card .btn { align-self: flex-start; }
 .how-to-chart h3 { display: flex; gap: 8px; align-items: center; }
 
-/* ---------- 16. Print (certificate only) ---------- */
-@media print {
-  body * { visibility: hidden; }
-  .certificate, .certificate * { visibility: visible; }
-  .certificate { position: absolute; left: 0; top: 0; width: 100%; margin: 0; }
-  .no-print { display: none !important; }
-}
-
 /* ---------- 17. Lesson update: step bar, fun facts, examples, quick check ---------- */
 html { scroll-padding-top: calc(var(--header-h) + 64px); }
 .lesson-hero { padding-bottom: 28px; }
@@ -1105,3 +1089,32 @@ html { scroll-padding-top: calc(var(--header-h) + 64px); }
   .check-options.two { grid-template-columns: 1fr; }
   .example-grid { grid-template-columns: 1fr; }
 }
+
+/* ---------- 18. Grand finale (passing the final challenge) ---------- */
+.finale {
+  margin-top: 20px; padding: 36px 28px; text-align: center; border-radius: var(--radius);
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, #eab308 22%, var(--surface)), var(--surface) 70%);
+  border: 2px solid color-mix(in srgb, #eab308 60%, var(--border));
+  box-shadow: var(--shadow-lg);
+  animation: pop .5s ease;
+}
+.finale-trophy { display: inline-block; font-size: 4.5rem; line-height: 1; animation: trophy-bounce 1.6s ease-in-out infinite; }
+@keyframes trophy-bounce {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-10px) rotate(4deg); }
+}
+.finale-kicker { font: 700 .8rem var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--warning); margin: 12px 0 4px; }
+.finale-title { font-size: clamp(2rem, 6vw, 3rem); margin-bottom: 10px; }
+.finale-lead { max-width: 56ch; margin: 0 auto 24px; color: var(--muted); font-size: 1.05rem; }
+.finale-lead strong { color: var(--text); }
+.finale-sub { font-size: 1.1rem; margin: 0 0 12px; }
+.finale-powers {
+  list-style: none; padding: 0; margin: 0 auto 20px; max-width: 760px; text-align: left;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;
+}
+.finale-powers li { display: flex; gap: 12px; align-items: flex-start; margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
+.finale-powers li span:last-child { font-size: .9rem; color: var(--muted); }
+.finale-powers strong { display: block; font-family: var(--font-head); font-size: 1rem; color: var(--text); }
+.finale-emoji { font-size: 1.5rem; line-height: 1.2; }
+.finale-mission { max-width: 620px; margin: 0 auto 20px; padding: 14px 18px; border-radius: 12px; background: var(--success-soft); }
+.finale-mission strong { color: var(--success); }
