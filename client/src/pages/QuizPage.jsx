@@ -5,13 +5,14 @@
  * only displays it and reacts to clicks, keys and the timer.
  * ===================================================================== */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
 import Visual from '../components/Visual.jsx';
 import { ProgressBar } from '../components/common.jsx';
 import { usePlayer } from '../context/PlayerContext.jsx';
 import { getLesson } from '../data/lessons.js';
 import { createEngine } from '../logic/QuizEngine.js';
+import { isFinalUnlocked } from '../logic/scoring.js';
 import { sound } from '../logic/effects.js';
 import QuizResults from './QuizResults.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
@@ -42,7 +43,7 @@ function toPayload(result, startedAt) {
 export default function QuizPage() {
   const { id } = useParams();
   const lesson = getLesson(id);
-  const { submitQuiz } = usePlayer();
+  const { submitQuiz, status } = usePlayer();
 
   const [round, setRound] = useState(0);                                  // "Try again" creates a new round
   const engine = useMemo(() => (lesson ? createEngine(lesson) : null), [lesson, round]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -144,10 +145,12 @@ export default function QuizPage() {
   }, [engine, phase, choose, next]);
 
   if (!lesson) return <NotFoundPage />;
+  // The final challenge only opens after all 10 lessons are completed.
+  if (lesson.final && !isFinalUnlocked(status) && phase === 'quiz') return <Navigate to="/challenge" replace />;
 
   const header = (
     <div className="quiz-top">
-      <Link className="text-link" to={`/lesson/${lesson.id}`}><Icon name="x" /> Exit {lesson.final ? 'challenge' : 'quiz'}</Link>
+      <Link className="text-link" to={lesson.final ? '/challenge' : `/lesson/${lesson.id}`}><Icon name="x" /> Exit {lesson.final ? 'challenge' : 'quiz'}</Link>
       <span className="quiz-label"><Icon name={lesson.icon} /> {lesson.title}</span>
     </div>
   );

@@ -12,6 +12,7 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const User = require('../models/User');
+const { MAX_LESSON_ID } = require('../config/constants');
 const { AppError, asyncHandler, codeMatches } = require('../utils/helpers');
 
 const requirePlayer = asyncHandler(async (req, res, next) => {
@@ -38,10 +39,10 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-/** Checks the :lessonId URL parameter is 1–10 and stores it as a number. */
+/** Checks the :lessonId URL parameter (1–10 = lessons, 11 = final challenge). */
 function validateLessonId(req, res, next) {
   const id = Number(req.params.lessonId);
-  if (!Number.isInteger(id) || id < 1 || id > 10) return next(new AppError(400, 'Lesson id must be a number from 1 to 10.'));
+  if (!Number.isInteger(id) || id < 1 || id > MAX_LESSON_ID) return next(new AppError(400, `Lesson id must be a number from 1 to ${MAX_LESSON_ID}.`));
   req.lessonId = id;
   next();
 }

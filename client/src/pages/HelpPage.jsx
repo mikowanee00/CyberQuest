@@ -1,21 +1,36 @@
-/* pages/HelpPage.jsx — How to play, scoring, shortcuts, glossary, privacy */
+/* pages/HelpPage.jsx — How to play, scoring, shortcuts, searchable glossary, privacy */
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
-import { LEVELS } from '../data/lessons.js';
+import { LEVELS, getLesson } from '../data/lessons.js';
+import { ALL_TERMS } from '../data/lessonExtras.js';
 import { SCORING } from '../logic/scoring.js';
 
-const GLOSSARY = [
-  ['Phishing', 'Pretending to be a trusted person or organization to steal information or money.'],
-  ['Smishing / Vishing', 'Phishing by text message (SMS) / by voice call.'],
-  ['Spear phishing', 'A targeted phishing message that uses details about you to look believable.'],
-  ['Social engineering', 'Manipulating people into breaking security rules.'],
-  ['Malware', 'Malicious software such as viruses, ransomware or spyware.'],
-  ['Two-factor authentication (2FA)', 'Logging in with two different types of proof, e.g. a password plus a phone code.'],
-  ['Password manager', 'An app that creates, stores and fills in unique passwords for you.'],
-  ['Evil twin', 'A fake Wi-Fi hotspot that imitates a real one.'],
-  ['VPN', 'A Virtual Private Network that encrypts your internet traffic.'],
-  ['PII', 'Personally identifiable information — data that can identify you.']
-];
+/** Every term from every lesson, with a search box. */
+function Glossary() {
+  const [query, setQuery] = useState('');
+  const q = query.trim().toLowerCase();
+  const terms = q
+    ? ALL_TERMS.filter(t => t.term.toLowerCase().includes(q) || t.def.toLowerCase().includes(q))
+    : ALL_TERMS;
+
+  return (
+    <div className="card glossary-card">
+      <label className="field-label" htmlFor="glossary-search">Search {ALL_TERMS.length} cybersecurity terms</label>
+      <input id="glossary-search" className="text-input" type="search" placeholder="e.g. ransomware, 2FA, phishing…"
+        value={query} onChange={e => setQuery(e.target.value)} />
+      <dl className="glossary">
+        {terms.map(t => (
+          <div key={`${t.lessonId}-${t.term}`}>
+            <dt><span aria-hidden="true">{t.emoji}</span> {t.term}</dt>
+            <dd>{t.def} <Link className="glossary-lesson" to={`/lesson/${t.lessonId}`}>Lesson {t.lessonId}: {getLesson(t.lessonId)?.title}</Link></dd>
+          </div>
+        ))}
+        {terms.length === 0 && <p className="muted">No terms match “{query}”.</p>}
+      </dl>
+    </div>
+  );
+}
 
 export default function HelpPage() {
   return (
@@ -34,22 +49,23 @@ export default function HelpPage() {
             <li><strong>Pick a nickname</strong> on the <Link to="/">Home</Link> page, tick the box to save your progress and press <em>Start learning</em>.</li>
             <li><strong>Write down your player code.</strong> With your nickname it lets you continue on any device.</li>
             <li><strong>Open a lesson</strong> from the <Link to="/lessons">Lessons</Link> page. Any order works, but the numbered order is recommended.</li>
-            <li><strong>Learn:</strong> read the short sections and the key takeaways.</li>
-            <li><strong>Real examples:</strong> read true-to-life stories of how scams happen.</li>
-            <li><strong>Practice:</strong> answer the Quick check questions, then try the hands-on activity (a green “Done” label appears).</li>
-            <li><strong>Quiz:</strong> press <em>Start the quiz</em>, pick answers and read the instant feedback.</li>
-            <li><strong>Results:</strong> see your score, stars, XP and badge. Review your answers, retry, or go to the next lesson.</li>
-            <li><strong>Final challenge:</strong> Lesson 10 is a timed quiz with random questions from every lesson. Score 70%+ to unlock the grand finale.</li>
+            <li><strong>Learn:</strong> read the short sections and the “Remember” box.</li>
+            <li><strong>Key terms:</strong> tap each card to reveal what the word means.</li>
+            <li><strong>Scenarios:</strong> work through 10 “what would you do?” situations. Try again until you get each one right, and earn a ⭐ for every first-try answer.</li>
+            <li><strong>Try it:</strong> finish the hands-on activity (a green “Done” label appears).</li>
+            <li><strong>Quiz:</strong> press <em>Start the quiz</em>. Score 70% or more to complete the lesson and earn its badge.</li>
+            <li><strong>Final challenge:</strong> unlocks after all 10 lessons. It's a timed quiz with random questions from every lesson. Score 70%+ to unlock your victory lap 🏁</li>
           </ol>
 
           <h2 className="section-heading">Scoring</h2>
           <div className="table-wrap card">
             <table>
               <tbody>
-                <tr><th scope="row">Correct answer</th><td>+{SCORING.XP_PER_CORRECT} XP</td></tr>
+                <tr><th scope="row">Correct quiz answer</th><td>+{SCORING.XP_PER_CORRECT} XP</td></tr>
                 <tr><th scope="row">Passing a lesson (70%+)</th><td>+{SCORING.XP_COMPLETION_BONUS} XP and a badge</td></tr>
                 <tr><th scope="row">Final challenge speed bonus</th><td>up to +5 XP per question</td></tr>
                 <tr><th scope="row">Stars</th><td>★ 70%+ · ★★ 80%+ · ★★★ 100%</td></tr>
+                <tr><th scope="row">Scenarios</th><td>practice only: ⭐ for each first-try answer</td></tr>
                 <tr><th scope="row">Replays</th><td>Only your best score counts, so feel free to retry!</td></tr>
               </tbody>
             </table>
@@ -72,10 +88,8 @@ export default function HelpPage() {
             </ul>
           </div>
 
-          <h2 className="section-heading">Glossary</h2>
-          <dl className="glossary card">
-            {GLOSSARY.map(([term, def]) => <div key={term}><dt>{term}</dt><dd>{def}</dd></div>)}
-          </dl>
+          <h2 className="section-heading" id="glossary">Glossary</h2>
+          <Glossary />
 
           <h2 className="section-heading">Privacy</h2>
           <div className="card">

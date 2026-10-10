@@ -5,7 +5,7 @@
  *   POST /api/me/lessons/:lessonId/activity   practice activity finished
  *   POST /api/me/lessons/:lessonId/quiz       quiz finished (saves attempt)
  * ===================================================================== */
-const { SCORING } = require('../config/constants');
+const { SCORING, MAX_LESSON_ID } = require('../config/constants');
 const { AppError, asyncHandler } = require('../utils/helpers');
 const progressService = require('../services/progressService');
 
@@ -43,7 +43,7 @@ function validateQuiz(body, lessonId) {
 
   const cleanAnswers = answers.map(a => ({
     question: String(a.question || '').slice(0, 500),
-    fromLesson: Number.isInteger(a.fromLesson) && a.fromLesson >= 1 && a.fromLesson <= 10 ? a.fromLesson : lessonId,
+    fromLesson: Number.isInteger(a.fromLesson) && a.fromLesson >= 1 && a.fromLesson <= MAX_LESSON_ID ? a.fromLesson : lessonId,
     chosen: String(a.chosen || '').slice(0, 300),
     correctAnswer: String(a.correctAnswer || '').slice(0, 300),
     correct: a.correct === true,

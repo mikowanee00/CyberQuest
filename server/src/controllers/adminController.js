@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const LessonProgress = require('../models/LessonProgress');
 const QuizAttempt = require('../models/QuizAttempt');
-const { LESSONS, lessonTitle } = require('../config/constants');
+const { LESSONS, lessonTitle, REGULAR_LESSON_COUNT, FINAL_LESSON_ID } = require('../config/constants');
 const { AppError, asyncHandler, toCSV } = require('../utils/helpers');
 const { lessonXP, levelFor } = require('../utils/scoring');
 const progressService = require('../services/progressService');
@@ -52,14 +52,14 @@ async function buildUserRows() {
       consent: u.consent,
       lessonsVisited: recs.filter(r => r.visited).length,
       activitiesDone: recs.filter(r => r.activityDone).length,
-      lessonsCompleted: recs.filter(r => r.passed).length,
+      lessonsCompleted: recs.filter(r => r.passed && r.lessonId <= REGULAR_LESSON_COUNT).length,
       quizzesTaken: recs.reduce((sum, r) => sum + r.attempts, 0),
       avgBestPercent: attempted.length
         ? round1(attempted.reduce((sum, r) => sum + r.bestPercent, 0) / attempted.length)
         : null,
       totalXP,
       rank: levelFor(totalXP).current.name,
-      finalChallengePassed: recs.some(r => r.lessonId === 10 && r.passed),
+      finalChallengePassed: recs.some(r => r.lessonId === FINAL_LESSON_ID && r.passed),
       lessons
     };
   });
@@ -176,7 +176,7 @@ const getSummary = asyncHandler(async (req, res) => {
       quizAttempts: t.attempts,
       averageScorePercent: t.attempts ? round1(t.avgPercent) : null,
       lessonCompletions: lessons.reduce((sum, l) => sum + l.playersCompleted, 0),
-      playersFinishedAllLessons: users.filter(u => u.lessonsCompleted === 10).length,
+      playersFinishedAllLessons: users.filter(u => u.lessonsCompleted === REGULAR_LESSON_COUNT).length,
       playersPassedFinal: users.filter(u => u.finalChallengePassed).length
     },
     lessons
@@ -218,7 +218,7 @@ const questionStats = asyncHandler(async (req, res) => {
 const EXPORTS = {
   users: async () => {
     const rows = await buildUserRows();
-    // Flatten per-lesson scores into columns L1 … L10
+    // Flatten per-lesson scores into columns L1 … L10 + Final
     rows.forEach(r => LESSONS.forEach(l => { r[`L${l.id}`] = r.lessons[l.id] ?? ''; }));
     return toCSV([
       { key: 'nickname', label: 'Nickname' },
@@ -232,7 +232,8 @@ const EXPORTS = {
       { key: 'avgBestPercent', label: 'Average best score %' },
       { key: 'totalXP', label: 'Total XP' },
       { key: 'rank', label: 'Rank' },
-      ...LESSONS.map(l => ({ key: `L${l.id}`, label: `L${l.id} best %` }))
+      ...LESSONS.map(l => ({ key: `L${l.id}`, label: l.id === FINAL_LESSON_ID ? 'Final best %' : `L${l.id} best %` })),
+      { key: 'finalChallengePassed', label: 'Passed final challenge' }
     ], rows);
   },
   attempts: async () => toCSV([

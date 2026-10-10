@@ -106,7 +106,7 @@ function PlayerDetail({ adminKey, userId, onClose, onDeleted }) {
               const r = data.lessons[l.id];
               return (
                 <tr key={l.id}>
-                  <td>{l.id}. {l.title}</td>
+                  <td>{l.final ? '🏆' : `${l.id}.`} {l.title}</td>
                   <td>{r?.visited ? '✔' : '—'}</td>
                   <td>{r?.activityDone ? '✔' : '—'}</td>
                   <td>{r?.attempts || 0}</td>
@@ -257,7 +257,7 @@ export default function AdminPage() {
                 <tbody>
                   {summary.lessons.map(l => (
                     <tr key={l.lessonId}>
-                      <td>{l.lessonId}. {l.title}</td>
+                      <td>{l.lessonId === 11 ? '🏆' : `${l.lessonId}.`} {l.title}</td>
                       <td>{l.playersVisited}</td>
                       <td>{l.activitiesCompleted}</td>
                       <td>{l.quizAttempts}</td>
@@ -315,7 +315,7 @@ export default function AdminPage() {
                 <tbody>
                   {questions.map(q => (
                     <tr key={`${q.lessonId}-${q.question}`}>
-                      <td>{q.lessonId}</td>
+                      <td>{q.lessonId === 11 ? 'Final' : q.lessonId}</td>
                       <td className="wrap">{q.question}</td>
                       <td>{q.timesAnswered}</td>
                       <td><Bar value={q.percentCorrect} /></td>

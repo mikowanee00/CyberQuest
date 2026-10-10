@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const answerSchema = new mongoose.Schema(
   {
     question: { type: String, maxlength: 500 },
-    fromLesson: { type: Number, min: 1, max: 10 }, // final-challenge questions come from other lessons
+    fromLesson: { type: Number, min: 1, max: 11 }, // final-challenge questions come from other lessons
     chosen: { type: String, maxlength: 300 },
     correctAnswer: { type: String, maxlength: 300 },
     correct: { type: Boolean, default: false },
@@ -22,7 +22,7 @@ const answerSchema = new mongoose.Schema(
 const quizAttemptSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    lessonId: { type: Number, required: true, min: 1, max: 10 },
+    lessonId: { type: Number, required: true, min: 1, max: 11 }, // 11 = final challenge
     score: { type: Number, required: true, min: 0 },
     total: { type: Number, required: true, min: 1 },
     percent: { type: Number, required: true, min: 0, max: 100 },

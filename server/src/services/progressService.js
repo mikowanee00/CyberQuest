@@ -7,7 +7,7 @@
 const User = require('../models/User');
 const LessonProgress = require('../models/LessonProgress');
 const QuizAttempt = require('../models/QuizAttempt');
-const { SCORING } = require('../config/constants');
+const { SCORING, REGULAR_LESSON_COUNT, FINAL_LESSON_ID } = require('../config/constants');
 const { lessonXP, levelFor } = require('../utils/scoring');
 
 /** Total XP of one player (sum over all lessons). */
@@ -30,7 +30,8 @@ async function getPlayerSummary(userId) {
 
   const lessons = {};
   let totalXP = 0;
-  let completedCount = 0;
+  let completedCount = 0; // regular lessons (1–10) passed
+  let badges = 0;         // every passed lesson, including the final challenge
   let quizzesTaken = 0;
   for (const r of records) {
     const xp = lessonXP(r);
@@ -47,7 +48,8 @@ async function getPlayerSummary(userId) {
       xp
     };
     totalXP += xp;
-    if (r.passed) completedCount += 1;
+    if (r.passed) badges += 1;
+    if (r.passed && r.lessonId <= REGULAR_LESSON_COUNT) completedCount += 1;
     quizzesTaken += r.attempts;
   }
 
@@ -58,7 +60,14 @@ async function getPlayerSummary(userId) {
       id: h._id, lessonId: h.lessonId, score: h.score, total: h.total,
       percent: h.percent, bonus: h.bonus, passed: h.passed, date: h.createdAt
     })),
-    stats: { totalXP, completedCount, badges: completedCount, quizzesTaken, level: levelFor(totalXP) }
+    stats: {
+      totalXP,
+      completedCount,
+      badges,
+      quizzesTaken,
+      finalPassed: !!(lessons[FINAL_LESSON_ID] && lessons[FINAL_LESSON_ID].passed),
+      level: levelFor(totalXP)
+    }
   };
 }
 

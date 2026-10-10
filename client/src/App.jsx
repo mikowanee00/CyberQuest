@@ -11,6 +11,7 @@ import HomePage from './pages/HomePage.jsx';
 import LessonsPage from './pages/LessonsPage.jsx';
 import LessonPage from './pages/LessonPage.jsx';
 import QuizPage from './pages/QuizPage.jsx';
+import FinalChallengePage from './pages/FinalChallengePage.jsx';
 import ProgressPage from './pages/ProgressPage.jsx';
 import HelpPage from './pages/HelpPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/lessons" element={<LessonsPage />} />
           <Route path="/lesson/:id" element={<RequirePlayer><LessonPage /></RequirePlayer>} />
+          <Route path="/challenge" element={<RequirePlayer><FinalChallengePage /></RequirePlayer>} />
           <Route path="/quiz/:id" element={<RequirePlayer><QuizPage /></RequirePlayer>} />
           <Route path="/progress" element={<RequirePlayer><ProgressPage /></RequirePlayer>} />
           <Route path="/help" element={<HelpPage />} />

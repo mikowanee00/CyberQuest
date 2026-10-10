@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
 import { usePlayer } from '../context/PlayerContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
-import { LESSONS } from '../data/lessons.js';
+import { REGULAR_LESSONS, FINAL, lessonPath } from '../data/lessons.js';
 import { nextLesson } from '../logic/scoring.js';
 import { sound } from '../logic/effects.js';
 
@@ -153,7 +153,7 @@ export default function HomePage() {
       <div className="welcome-back">
         <p>Welcome back, <strong>{player.nickname}</strong>! You have completed <strong>{stats.completedCount}</strong> of 10 lessons.</p>
         <div className="btn-row">
-          <Link className="btn btn-primary btn-lg" to={`/lesson/${next.id}`}><Icon name="play" /> {stats.completedCount ? 'Continue' : 'Start'}: Lesson {next.id}</Link>
+          <Link className="btn btn-primary btn-lg" to={lessonPath(next)}><Icon name={next.final ? 'trophy' : 'play'} /> {next.final ? 'Take the final challenge' : `${stats.completedCount ? 'Continue' : 'Start'}: Lesson ${next.id}`}</Link>
           <Link className="btn btn-secondary btn-lg" to="/lessons"><Icon name="grid" /> All lessons</Link>
         </div>
       </div>
@@ -183,8 +183,9 @@ export default function HomePage() {
             {start}
             <ul className="hero-facts">
               <li><strong>10</strong> lessons</li>
-              <li><strong>50</strong> quiz questions</li>
-              <li><strong>10</strong> badges</li>
+              <li><strong>100</strong> scenarios</li>
+              <li><strong>60+</strong> cyber terms</li>
+              <li><strong>1</strong> boss level 👾</li>
             </ul>
           </div>
           <div className="hero-art" dangerouslySetInnerHTML={{ __html: HERO_ART }} />
@@ -198,12 +199,12 @@ export default function HomePage() {
             <article className="feature">
               <span className="feature-icon" style={{ '--c': '#6366f1' }}><Icon name="book" /></span>
               <h3>1. Learn</h3>
-              <p>Short lessons with real stories of how scams actually happen.</p>
+              <p>Short lessons plus key cybersecurity terms explained in plain words.</p>
             </article>
             <article className="feature">
               <span className="feature-icon" style={{ '--c': '#14b8a6' }}><Icon name="target" /></span>
               <h3>2. Practice</h3>
-              <p>Spot red flags in fake emails, chat with a scammer and test your passwords.</p>
+              <p>10 “what would you do?” scenarios per lesson, plus hands-on activities.</p>
             </article>
             <article className="feature">
               <span className="feature-icon" style={{ '--c': '#f59e0b' }}><Icon name="award" /></span>
@@ -222,7 +223,7 @@ export default function HomePage() {
             <Link to="/lessons" className="text-link">View all <Icon name="arrowRight" /></Link>
           </div>
           <ol className="mini-lessons">
-            {LESSONS.map(l => (
+            {REGULAR_LESSONS.map(l => (
               <li key={l.id}>
                 <Link to={`/lesson/${l.id}`} style={{ '--c': l.color }}>
                   <span className="mini-icon"><Icon name={l.icon} /></span>
@@ -231,6 +232,13 @@ export default function HomePage() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link to={lessonPath(FINAL)} style={{ '--c': FINAL.color }}>
+                <span className="mini-icon"><Icon name="trophy" /></span>
+                <span><small>Boss level</small>{FINAL.title}</span>
+                {status(FINAL.id) === 'completed' && <span className="mini-done" aria-label="completed"><Icon name="check" /></span>}
+              </Link>
+            </li>
           </ol>
         </div>
       </section>

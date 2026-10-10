@@ -8,7 +8,7 @@ import Icon from '../components/Icon.jsx';
 import { Stars } from '../components/common.jsx';
 import { usePlayer } from '../context/PlayerContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
-import { getLesson } from '../data/lessons.js';
+import { getLesson, lessonPath } from '../data/lessons.js';
 import { SCORING, resultTitleFor, starsForPercent } from '../logic/scoring.js';
 import { sound, confetti } from '../logic/effects.js';
 
@@ -90,14 +90,14 @@ export default function QuizResults({ lesson, result, outcome, onRetry }) {
         )}
 
         {!passed && (
-          <p className="muted">Score {SCORING.PASS_PERCENT}% or more to complete this lesson{lesson.final ? ' and unlock the grand finale' : ' and earn the badge'}.</p>
+          <p className="muted">Score {SCORING.PASS_PERCENT}% or more to complete this lesson{lesson.final ? ' and unlock your victory lap 🏁' : ' and earn the badge'}.</p>
         )}
 
         {/* A passed final challenge shows its buttons in the finale below instead */}
         {!(lesson.final && passed) && (
           <div className="btn-row center">
             <button type="button" className="btn btn-secondary" onClick={onRetry}><Icon name="refresh" /> {lesson.final ? 'New challenge' : 'Try again'}</button>
-            {!lesson.final && next && <Link className="btn btn-primary" to={`/lesson/${next.id}`}>Next: {next.title} <Icon name="arrowRight" /></Link>}
+            {!lesson.final && next && <Link className="btn btn-primary" to={lessonPath(next)}>{next.final ? 'Final challenge' : `Next: ${next.title}`} <Icon name="arrowRight" /></Link>}
             {lesson.final
               ? <Link className="btn btn-primary" to="/progress"><Icon name="chart" /> See my progress</Link>
               : <Link className="btn btn-ghost" to="/lessons"><Icon name="grid" /> All lessons</Link>}

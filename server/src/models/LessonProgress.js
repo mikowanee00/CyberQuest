@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const lessonProgressSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
-    lessonId: { type: Number, required: true, min: 1, max: 10 },
+    lessonId: { type: Number, required: true, min: 1, max: 11 }, // 11 = final challenge
     visited: { type: Boolean, default: false },
     activityDone: { type: Boolean, default: false },
     activityDoneAt: { type: Date },

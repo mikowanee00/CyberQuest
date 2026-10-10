@@ -13,7 +13,7 @@ export default function Footer() {
         </div>
         <nav className="footer-nav" aria-label="Footer">
           <Link to="/lessons">Lessons</Link>
-          <Link to="/lesson/10">Final Challenge</Link>
+          <Link to="/challenge">Final Challenge</Link>
           <Link to="/progress">My Progress</Link>
           <Link to="/help">How to Play</Link>
         </nav>

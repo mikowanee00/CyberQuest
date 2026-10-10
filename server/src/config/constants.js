@@ -22,8 +22,14 @@ const LESSONS = [
   { id: 7, title: 'Two-Factor Authentication' },
   { id: 8, title: 'Recognizing Scams' },
   { id: 9, title: 'Protecting Personal Information' },
-  { id: 10, title: 'Final Cybersecurity Challenge' }
+  { id: 10, title: 'Malware & Ransomware' },
+  { id: 11, title: 'Final Challenge' }
 ];
+
+// Lessons 1–10 are regular lessons; 11 is the final challenge.
+const REGULAR_LESSON_COUNT = 10;
+const FINAL_LESSON_ID = 11;
+const MAX_LESSON_ID = 11;
 
 // Ranks unlocked by total XP
 const LEVELS = [
@@ -36,4 +42,4 @@ const LEVELS = [
 
 const lessonTitle = id => (LESSONS.find(l => l.id === Number(id)) || {}).title || `Lesson ${id}`;
 
-module.exports = { SCORING, LESSONS, LEVELS, lessonTitle };
+module.exports = { SCORING, LESSONS, LEVELS, lessonTitle, REGULAR_LESSON_COUNT, FINAL_LESSON_ID, MAX_LESSON_ID };

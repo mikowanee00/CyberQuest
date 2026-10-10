@@ -9,7 +9,7 @@ import { Stars, StatusChip, ProgressBar } from '../components/common.jsx';
 import { usePlayer } from '../context/PlayerContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import { api, loadSession, downloadBlob } from '../api/client.js';
-import { LESSONS, getLesson } from '../data/lessons.js';
+import { LESSONS, getLesson, lessonPath } from '../data/lessons.js';
 import { formatDate } from '../logic/effects.js';
 
 export default function ProgressPage() {
@@ -114,11 +114,11 @@ export default function ProgressPage() {
           {LESSONS.map(l => {
             const earned = status(l.id) === 'completed';
             return (
-              <Link key={l.id} className={`badge ${earned ? 'earned' : 'locked'}`} to={`/lesson/${l.id}`} style={{ '--c': l.color }}
+              <Link key={l.id} className={`badge ${earned ? 'earned' : 'locked'}`} to={lessonPath(l)} style={{ '--c': l.color }}
                 aria-label={`${l.badge} badge, ${earned ? 'earned' : 'locked'}`}>
                 <span className="badge-medal"><Icon name={earned ? l.icon : 'lock'} /></span>
                 <strong>{l.badge}</strong>
-                <small>{earned ? 'Earned' : `Pass Lesson ${l.id}`}</small>
+                <small>{earned ? 'Earned' : l.final ? 'Pass the final challenge' : `Pass Lesson ${l.id}`}</small>
               </Link>
             );
           })}
@@ -133,7 +133,7 @@ export default function ProgressPage() {
                 const rec = lessons[l.id];
                 return (
                   <tr key={l.id}>
-                    <td><Link to={`/lesson/${l.id}`}>{l.id}. {l.title}</Link></td>
+                    <td><Link to={lessonPath(l)}>{l.final ? '🏆' : `${l.id}.`} {l.title}</Link></td>
                     <td><StatusChip status={status(l.id)} /></td>
                     <td>{rec && rec.attempts ? `${rec.bestScore}/${rec.total} (${rec.bestPercent}%)` : '—'}</td>
                     <td><Stars count={stars(l.id)} /></td>

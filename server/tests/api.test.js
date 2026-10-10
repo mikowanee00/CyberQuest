@@ -94,8 +94,9 @@ test('visiting a lesson and finishing an activity are saved', async () => {
   assert.equal(res.body.summary.lessons['2'].activityDone, true);
 });
 
-test('invalid lesson ids are rejected', async () => {
-  assert.equal((await asPlayer(request(app).post('/api/me/lessons/11/visit'))).status, 400);
+test('invalid lesson ids are rejected (1–10 lessons, 11 = final challenge)', async () => {
+  assert.equal((await asPlayer(request(app).post('/api/me/lessons/12/visit'))).status, 400);
+  assert.equal((await asPlayer(request(app).post('/api/me/lessons/0/visit'))).status, 400);
 });
 
 test('passing a quiz awards XP and a badge', async () => {
@@ -115,6 +116,14 @@ test('a worse attempt does not lower the best score', async () => {
   assert.equal(res.body.summary.lessons['2'].attempts, 2);
 });
 
+test('the final challenge counts as a badge but not as one of the 10 lessons', async () => {
+  const res = await asPlayer(request(app).post('/api/me/lessons/11/quiz')).send(quizBody(9, 10, { bonus: 30 }));
+  assert.equal(res.status, 201);
+  assert.equal(res.body.summary.stats.completedCount, 1); // still only lesson 2
+  assert.equal(res.body.summary.stats.badges, 2);         // lesson 2 + final
+  assert.equal(res.body.summary.stats.finalPassed, true);
+});
+
 test('tampered quiz results are rejected', async () => {
   const body = quizBody(3, 5);
   body.score = 5; // claims 5 but only 3 answers are correct
@@ -132,15 +141,18 @@ test('admin can list users, lessons and questions', async () => {
   assert.equal(users.status, 200);
   assert.equal(users.body.users.length, 1);
   assert.equal(users.body.users[0].lessonsCompleted, 1);
-  assert.equal(users.body.users[0].quizzesTaken, 2);
+  assert.equal(users.body.users[0].finalChallengePassed, true);
+  assert.equal(users.body.users[0].quizzesTaken, 3);
 
   const summary = await request(app).get('/api/admin/summary').set('x-admin-key', ADMIN);
   assert.equal(summary.body.totals.players, 1);
-  assert.equal(summary.body.totals.quizAttempts, 2);
+  assert.equal(summary.body.totals.quizAttempts, 3);
+  assert.equal(summary.body.totals.playersPassedFinal, 1);
+  assert.equal(summary.body.lessons.length, 11);
   assert.equal(summary.body.lessons.find(l => l.lessonId === 2).passRatePercent, 50);
 
   const questions = await request(app).get('/api/admin/questions').set('x-admin-key', ADMIN);
-  assert.equal(questions.body.questions.length, 5);
+  assert.equal(questions.body.questions.length, 15); // 5 from lesson 2 + 10 from the final challenge
 });
 
 test('admin CSV export works', async () => {
@@ -154,7 +166,7 @@ test('admin CSV export works', async () => {
 
 test('a player can export and then delete all their data', async () => {
   const exp = await asPlayer(request(app).get('/api/me/export'));
-  assert.equal(exp.body.attempts.length, 2);
+  assert.equal(exp.body.attempts.length, 3);
   assert.equal((await asPlayer(request(app).delete('/api/me'))).status, 204);
   const users = await request(app).get('/api/admin/users').set('x-admin-key', ADMIN);
   assert.equal(users.body.users.length, 0);

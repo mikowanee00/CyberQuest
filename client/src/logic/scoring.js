@@ -2,7 +2,7 @@
  * logic/scoring.js — Game rules used by the React pages
  * (The server applies the same rules in server/src/config/constants.js.)
  * ===================================================================== */
-import { LESSONS, LEVELS, RESULT_TITLES } from '../data/lessons.js';
+import { LEVELS, RESULT_TITLES, REGULAR_LESSONS, FINAL } from '../data/lessons.js';
 
 export const SCORING = {
   PASS_PERCENT: 70,
@@ -32,8 +32,16 @@ export const starsFor = rec => (rec && rec.attempts ? starsForPercent(rec.bestPe
 /** Fun title ("Phish Food" … "Cyber Detective!") for a quiz percentage. */
 export const resultTitleFor = percent => RESULT_TITLES.find(t => percent >= t.min);
 
-/** The first lesson the player has not completed. */
-export const nextLesson = status =>
-  LESSONS.find(l => status(l.id) !== 'completed') || LESSONS[LESSONS.length - 1];
+/** The 10 regular lessons the player hasn't completed yet. */
+export const lessonsLeft = status => REGULAR_LESSONS.filter(l => status(l.id) !== 'completed');
+
+/** The final challenge unlocks once all 10 lessons are completed. */
+export const isFinalUnlocked = status => lessonsLeft(status).length === 0;
+
+/** The next thing to do: the first unfinished lesson, otherwise the final challenge. */
+export const nextLesson = status => lessonsLeft(status)[0] || FINAL;
+
+/** "Lesson 3" or "Final challenge". */
+export const lessonLabel = lesson => (lesson.final ? 'Final challenge' : `Lesson ${lesson.id}`);
 
 export { LEVELS };

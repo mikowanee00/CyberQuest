@@ -5,6 +5,7 @@
  * Kept separate from the components ("content as data"), so editing a
  * lesson never requires touching React code.
  *
+ * Lessons 1–10 are regular lessons; id 11 is the final challenge (final: true).
  * Lesson:   { id, title, icon, color, minutes, badge, summary,
  *             sections[{heading, body(html)}], takeaways[], activity, quiz[] }
  * Question: { type:"mcq"|"tf"|"verdict", prompt, options, answer, explain, visual? }
@@ -38,7 +39,7 @@ export const LESSONS = [
     title: `What Is Phishing?`,
     icon: 'hook',
     color: '#6366f1',
-    minutes: 4,
+    minutes: 10,
     badge: `Bait Detector`,
     summary: `Phishing is a trick where attackers pretend to be someone you trust so you will hand over passwords, money or personal data.`,
     sections: [
@@ -156,7 +157,7 @@ export const LESSONS = [
     title: `Spot the Fake Email`,
     icon: 'mail',
     color: '#0ea5e9',
-    minutes: 5,
+    minutes: 12,
     badge: `Inbox Inspector`,
     summary: `Learn the red flags that give phishing emails away, and how to check where a link really goes before you click.`,
     sections: [
@@ -294,7 +295,7 @@ export const LESSONS = [
     title: `Strong vs. Weak Passwords`,
     icon: 'key',
     color: '#f59e0b',
-    minutes: 5,
+    minutes: 10,
     badge: `Password Pro`,
     summary: `Find out how attackers crack passwords and how to create ones that are long, unique and still easy to remember.`,
     sections: [
@@ -390,7 +391,7 @@ export const LESSONS = [
     title: `Social Engineering`,
     icon: 'mask',
     color: '#ec4899',
-    minutes: 6,
+    minutes: 12,
     badge: `Human Firewall`,
     summary: `Social engineers “hack humans” — they talk, charm or pressure people into breaking security rules. Learn their tricks.`,
     sections: [
@@ -531,7 +532,7 @@ export const LESSONS = [
     title: `Safe Social Media Habits`,
     icon: 'share',
     color: '#8b5cf6',
-    minutes: 5,
+    minutes: 10,
     badge: `Privacy Poster`,
     summary: `Small details you post online can be pieced together by scammers. Learn what to keep off your feed and how to lock down your settings.`,
     sections: [
@@ -655,7 +656,7 @@ export const LESSONS = [
     title: `Public Wi-Fi Dangers`,
     icon: 'wifi',
     color: '#14b8a6',
-    minutes: 5,
+    minutes: 10,
     badge: `Hotspot Hero`,
     summary: `Free Wi-Fi in cafés and airports is convenient but risky. Learn about “evil twin” networks and how to stay safe on the go.`,
     sections: [
@@ -755,7 +756,7 @@ export const LESSONS = [
     title: `Two-Factor Authentication`,
     icon: 'phoneShield',
     color: '#22c55e',
-    minutes: 5,
+    minutes: 10,
     badge: `Double Locker`,
     summary: `A password alone is one lock. Two-factor authentication adds a second, different lock so a stolen password is not enough.`,
     sections: [
@@ -860,7 +861,7 @@ export const LESSONS = [
     title: `Recognizing Scams`,
     icon: 'alert',
     color: '#ef4444',
-    minutes: 6,
+    minutes: 12,
     badge: `Scam Buster`,
     summary: `Fake jobs, prizes, tech-support pop-ups, rental deals… scams wear many costumes but follow the same script.`,
     sections: [
@@ -1002,7 +1003,7 @@ export const LESSONS = [
     title: `Protecting Personal Information`,
     icon: 'idCard',
     color: '#f97316',
-    minutes: 5,
+    minutes: 10,
     badge: `Data Guardian`,
     summary: `Your personal data is valuable to criminals. Learn what to share, what to keep private, and everyday habits that protect you.`,
     sections: [
@@ -1118,21 +1119,147 @@ export const LESSONS = [
   },
 
   /* ================================================================= */
-  /* LESSON 10 — FINAL CYBERSECURITY CHALLENGE                          */
+  /* LESSON 10 — MALWARE & RANSOMWARE                                   */
   /* ================================================================= */
   {
     id: 10,
+    title: `Malware & Ransomware`,
+    icon: 'bug',
+    color: '#d946ef',
+    minutes: 12,
+    badge: `Malware Hunter`,
+    summary: `Malware is software built to harm you: it spies, steals, or locks your files and demands a ransom. Learn how it sneaks in and how to keep it out.`,
+    sections: [
+      {
+        heading: `Meet the malware family`,
+        body: `<p><strong>Malware</strong> (malicious software) is any program designed to harm your device or steal from you. The main members of the family:</p>
+               <ul>
+                 <li>🦠 <strong>Virus</strong> — attaches itself to files and spreads when they are shared or opened.</li>
+                 <li>🪱 <strong>Worm</strong> — spreads by itself from computer to computer over a network.</li>
+                 <li>🐴 <strong>Trojan horse</strong> — pretends to be something useful (a free game, a “cracked” app) but hides malware inside.</li>
+                 <li>🔒 <strong>Ransomware</strong> — locks or encrypts your files and demands payment to unlock them.</li>
+                 <li>🕵️ <strong>Spyware &amp; keyloggers</strong> — secretly watch what you do and record what you type, including passwords.</li>
+                 <li>📢 <strong>Adware</strong> — floods you with pop-ups and ads, often bundled with free downloads.</li>
+               </ul>`
+      },
+      {
+        heading: `How malware sneaks in`,
+        body: `<ul>
+                 <li><strong>Pirated or “cracked” software</strong>, games and movies.</li>
+                 <li><strong>Fake updates and pop-ups</strong> (“Your video player is out of date!”).</li>
+                 <li><strong>Email attachments</strong> and documents that ask you to “Enable Content”.</li>
+                 <li><strong>Unknown USB drives</strong>.</li>
+                 <li><strong>Apps from outside the official app store</strong>.</li>
+                 <li><strong>Unpatched software</strong>: old versions with known security holes.</li>
+               </ul>`
+      },
+      {
+        heading: `Your anti-malware toolkit`,
+        body: `<ul>
+                 <li>🩹 <strong>Install updates (patches)</strong> promptly. They close the holes malware uses.</li>
+                 <li>🛡️ Keep <strong>antivirus</strong> turned on (the one built into your computer is a good start).</li>
+                 <li>🏪 Download apps only from <strong>official stores</strong> and real company websites.</li>
+                 <li>💾 Follow the <strong>3-2-1 backup rule</strong>: 3 copies, on 2 different kinds of storage, with 1 kept offline or in a versioned cloud.</li>
+               </ul>
+               <p class="callout">🚨 <strong>If ransomware strikes:</strong> disconnect from Wi-Fi, don't pay, tell IT or a trusted adult, and restore your files from a backup.</p>`
+      }
+    ],
+    takeaways: [
+      `“Free” cracked software and fake updates are malware's favorite disguises.`,
+      `Updates and antivirus are your first line of defense.`,
+      `Backups turn a ransomware disaster into a minor annoyance.`
+    ],
+    activity: {
+      type: 'sorter',
+      title: `Match the malware`,
+      instructions: `What does each one do? Put every item into the right group. Click an item, then click a group (or drag and drop).`,
+      buckets: [
+        { id: 'lock', label: `🔒 Locks your files for ransom` },
+        { id: 'spy', label: `🕵️ Spies on you` },
+        { id: 'sneak', label: `🐴 Sneaks in or spreads itself` }
+      ],
+      items: [
+        { label: `Ransomware`, bucket: 'lock', why: `Ransomware encrypts your files and demands payment.` },
+        { label: `“Pay $500 in Bitcoin to unlock your photos”`, bucket: 'lock', why: `A ransom demand is the calling card of ransomware.` },
+        { label: `Spyware`, bucket: 'spy', why: `Spyware secretly watches what you do.` },
+        { label: `Records every key you type`, bucket: 'spy', why: `That's a keylogger, a type of spyware.` },
+        { label: `Secretly switches on your webcam`, bucket: 'spy', why: `Spying through your camera is spyware's job.` },
+        { label: `Trojan horse`, bucket: 'sneak', why: `Trojans hide inside something that looks useful.` },
+        { label: `A “free” game that installs a hidden backdoor`, bucket: 'sneak', why: `Disguised as a game, that's a Trojan.` },
+        { label: `Worm`, bucket: 'sneak', why: `Worms spread from computer to computer by themselves.` },
+        { label: `Copies itself to every PC on the network`, bucket: 'sneak', why: `Spreading on its own is how a worm works.` }
+      ]
+    },
+    quiz: [
+      {
+        type: 'mcq',
+        prompt: `Your screen turns red: “Your files are encrypted. Pay 0.1 Bitcoin within 48 hours.” What's the best FIRST step?`,
+        options: [
+          `Pay quickly before the deadline`,
+          `Disconnect from the network and tell IT or a trusted adult`,
+          `Restart the computer again and again`,
+          `Delete random files to make space`
+        ],
+        answer: 1,
+        explain: `Disconnecting stops the ransomware from spreading to other devices and your cloud files. Paying funds criminals and often doesn't even work.`
+      },
+      {
+        type: 'mcq',
+        prompt: `Which download is MOST likely to contain malware?`,
+        options: [
+          `A browser update from the browser's own settings menu`,
+          `A course syllabus PDF from your school's portal`,
+          `An app from the official app store with thousands of reviews`,
+          `“PhotoEditor_PRO_cracked_free.exe” from a forum`
+        ],
+        answer: 3,
+        explain: `Cracked software from random forums is a classic Trojan horse. The others come from official, trusted sources.`
+      },
+      {
+        type: 'tf',
+        prompt: `If you have antivirus, it's fine to ignore software updates.`,
+        answer: false,
+        explain: `Antivirus can't catch everything. Updates (patches) close the security holes that malware uses in the first place. You need both.`
+      },
+      {
+        type: 'verdict',
+        prompt: `You're watching a free movie site when this pops up. Real update or fake?`,
+        visual: { type: 'popup', title: `Video Player Update Required`, text: `Your video player is out of date. Download the update now to continue watching.`, cta: `Download update` },
+        options: [`✅ Real update`, `🚩 Fake update`],
+        answer: 1,
+        explain: `Real updates come from your device's settings or app store, never from a pop-up on a random website. Fake updates are a top way to spread malware.`
+      },
+      {
+        type: 'mcq',
+        prompt: `Which backup plan best protects you from ransomware?`,
+        options: [
+          `A copy in another folder on the same laptop`,
+          `Cloud backup with version history, plus a drive you unplug after backing up`,
+          `A USB drive that's always plugged in`,
+          `No backup, antivirus is enough`
+        ],
+        answer: 1,
+        explain: `Ransomware can encrypt anything it can reach, including the same laptop and always-connected drives. Keep at least one copy it can't touch.`
+      }
+    ]
+  },
+
+  /* ================================================================= */
+  /* FINAL CYBERSECURITY CHALLENGE (unlocks after all 10 lessons)       */
+  /* ================================================================= */
+  {
+    id: 11,
     final: true,
     title: `Final Cybersecurity Challenge`,
     icon: 'trophy',
     color: '#eab308',
     minutes: 6,
     badge: `Cyber Champion`,
-    summary: `Put everything together! Ten random questions from every lesson, against the clock. Score 70% or more for a big finish. 🏆`,
+    summary: `The boss level! 👾 Unlocks when you finish all 10 lessons. Ten random questions from every lesson, against the clock.`,
     sections: [
       {
         heading: `Put it all together`,
-        body: `<p>The final challenge mixes questions from <strong>all nine lessons</strong>, plus a few brand-new scenarios. The questions are picked at random, so every attempt is different.</p>`
+        body: `<p>The final challenge mixes questions from <strong>all ten lessons</strong>, plus a few brand-new scenarios. The questions are picked at random, so every attempt is different.</p>`
       },
       {
         heading: `Challenge rules`,
@@ -1140,7 +1267,7 @@ export const LESSONS = [
                  <li>⏱️ <strong>10 questions</strong>, <strong>25 seconds</strong> each.</li>
                  <li>⚡ Answer correctly <strong>and</strong> quickly for up to <strong>+5 bonus XP</strong> per question.</li>
                  <li>⌛ If time runs out, the question counts as wrong. These are the trickiest questions in CyberQuest, so read every option!</li>
-                 <li>🏆 Score <strong>70% or more</strong> to unlock the grand finale.</li>
+                 <li>🏆 Score <strong>70% or more</strong> to unlock your victory lap 🏁</li>
                </ul>
                <p class="callout">🧠 <strong>Quick refresher:</strong> check the sender, hover over links, never share passwords or codes, use passphrases + 2FA, avoid open Wi-Fi for sensitive tasks, and be suspicious of anything urgent.</p>`
       }
@@ -1216,3 +1343,12 @@ export const LESSONS = [
 
 /** Finds a lesson by id (number or string). */
 export const getLesson = id => LESSONS.find(l => l.id === Number(id)) || null;
+
+/** The 10 regular lessons (everything except the final challenge). */
+export const REGULAR_LESSONS = LESSONS.filter(l => !l.final);
+
+/** The final challenge, which unlocks after all 10 lessons are completed. */
+export const FINAL = LESSONS.find(l => l.final);
+
+/** Where a lesson lives in the app. */
+export const lessonPath = lesson => (lesson.final ? '/challenge' : `/lesson/${lesson.id}`);

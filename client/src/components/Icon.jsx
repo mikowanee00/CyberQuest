@@ -15,6 +15,7 @@ const PATHS = {
   phoneShield: '<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7l3 1.2v2.3c0 2-1.3 3.4-3 4-1.7-.6-3-2-3-4V8.2z"/><path d="M11 19h2"/>',
   alert: '<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
   idCard: '<rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2.5"/><path d="M14 10h5M14 14h3M4.5 17c.6-1.5 2-2.2 3.5-2.2s2.9.7 3.5 2.2"/>',
+  bug: '<rect x="7" y="6" width="10" height="14" rx="5"/><path d="M12 10v10M9 3l1.5 3M15 3l-1.5 3M3 13h4M17 13h4M4 8l3 2M20 8l-3 2M4 19l3-2M20 19l-3-2"/>',
   trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
   x: '<path d="M18 6 6 18M6 6l12 12"/>',

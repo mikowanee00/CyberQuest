@@ -1,17 +1,21 @@
 /* =====================================================================
- * pages/LessonsPage.jsx — Grid of all 10 lessons ("mission map")
+ * pages/LessonsPage.jsx — The 10 lessons + the final challenge
  * ===================================================================== */
 import { Link } from 'react-router-dom';
 import Icon from '../components/Icon.jsx';
 import { Stars, StatusChip, ProgressBar } from '../components/common.jsx';
 import { usePlayer } from '../context/PlayerContext.jsx';
-import { LESSONS } from '../data/lessons.js';
-import { nextLesson } from '../logic/scoring.js';
+import { REGULAR_LESSONS, FINAL, lessonPath } from '../data/lessons.js';
+import { nextLesson, isFinalUnlocked, lessonsLeft } from '../logic/scoring.js';
 
 export default function LessonsPage() {
-  const { player, lessons, stats, status, stars } = usePlayer();
-  const done = stats.completedCount;
+  const { player, lessons, status, stars } = usePlayer();
+  const total = REGULAR_LESSONS.length;
+  const left = lessonsLeft(status).length;
+  const done = total - left;
   const next = nextLesson(status);
+  const unlocked = isFinalUnlocked(status);
+  const finalRec = lessons[FINAL.id];
 
   return (
     <>
@@ -20,13 +24,13 @@ export default function LessonsPage() {
           <div>
             <p className="eyebrow"><Icon name="grid" /> Mission map</p>
             <h1>Lessons</h1>
-            <p className="lead">Work through the lessons in order, or jump to any topic. Each one ends with a quiz — score 70% or more to earn its badge.</p>
+            <p className="lead">Work through the 10 lessons in order, or jump to any topic. Pass each quiz with 70% or more to earn its badge. Finish all 10 to unlock the final challenge.</p>
           </div>
           <div className="overall card">
-            <div className="overall-top"><strong>{done} / 10</strong> completed</div>
-            <ProgressBar percent={done * 10} large />
-            <Link className="btn btn-primary" to={`/lesson/${next.id}`}>
-              <Icon name="play" /> {done === 10 ? 'Replay the final challenge' : `Next up: Lesson ${next.id}`}
+            <div className="overall-top"><strong>{done} / {total}</strong> lessons completed</div>
+            <ProgressBar percent={(done / total) * 100} large />
+            <Link className="btn btn-primary" to={lessonPath(next)}>
+              <Icon name={next.final ? 'trophy' : 'play'} /> {next.final ? 'Take the final challenge' : `Next up: Lesson ${next.id}`}
             </Link>
           </div>
         </div>
@@ -34,18 +38,19 @@ export default function LessonsPage() {
 
       <div className="container page-body">
         {!player && (
-          <p className="banner banner-info"><Icon name="user" /> <span><Link to="/">Create a player profile</Link> on the Home page to start the lessons and save your progress.</span></p>
+          <p className="banner banner-info"><Icon name="user" /> <span><Link to="/">Pick a nickname</Link> on the Home page to start the lessons and save your progress.</span></p>
         )}
+
         <div className="lesson-grid">
-          {LESSONS.map(l => {
+          {REGULAR_LESSONS.map(l => {
             const rec = lessons[l.id];
             return (
-              <Link key={l.id} className={`lesson-card ${l.final ? 'is-final' : ''}`} to={`/lesson/${l.id}`} style={{ '--c': l.color }}>
+              <Link key={l.id} className="lesson-card" to={lessonPath(l)} style={{ '--c': l.color }}>
                 <div className="lc-top">
                   <span className="lc-icon"><Icon name={l.icon} /></span>
                   <StatusChip status={status(l.id)} />
                 </div>
-                <p className="lc-num">{l.final ? 'Final challenge' : `Lesson ${l.id}`}</p>
+                <p className="lc-num">Lesson {l.id}</p>
                 <h3>{l.title}</h3>
                 <p className="lc-summary">{l.summary}</p>
                 <div className="lc-foot">
@@ -57,6 +62,22 @@ export default function LessonsPage() {
             );
           })}
         </div>
+
+        {/* The final challenge: its own part, after the 10 lessons */}
+        <Link to={lessonPath(FINAL)} className={`final-banner ${unlocked ? 'is-unlocked' : 'is-locked'}`} style={{ '--c': FINAL.color }}>
+          <span className="final-banner-icon"><Icon name={unlocked ? 'trophy' : 'lock'} /></span>
+          <span className="final-banner-text">
+            <small>Boss level</small>
+            <strong>{FINAL.title}</strong>
+            <span>
+              {unlocked
+                ? 'Unlocked! Ten random questions from every lesson, against the clock.'
+                : `Locked: complete ${left} more ${left === 1 ? 'lesson' : 'lessons'} to unlock it.`}
+            </span>
+          </span>
+          {finalRec && finalRec.attempts > 0 && <Stars count={stars(FINAL.id)} />}
+          <span className="final-banner-cta">{unlocked ? <>Start <Icon name="arrowRight" /></> : <>{done}/{total}</>}</span>
+        </Link>
       </div>
     </>
   );
